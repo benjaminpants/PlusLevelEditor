@@ -179,7 +179,7 @@ namespace BaldiLevelEditor
             Initialize();
 
             myCamera?.UpdateTargets(myPawn, 30);
-            Singleton<MusicManager>.Instance.PlayMidi(BaldiLevelEditorPlugin.editorTheme, true);
+            Singleton<MusicManager>.Instance.PlayMidi(BaldiLevelEditorPlugin.editorThemes[UnityEngine.Random.Range(0,4)], true);
             /*level.areas.Add(new AreaData(new ByteVector2(0, 0), new ByteVector2(3, 12), 1));
             level.areas.Add(new AreaData(new ByteVector2(3, 0), new ByteVector2(10, 3), 1));
             level.areas.Add(new AreaData(new ByteVector2(5, 18), new ByteVector2(4, 4), 1));

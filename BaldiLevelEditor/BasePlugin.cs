@@ -76,7 +76,7 @@ namespace BaldiLevelEditor
         public static Texture2D lightmapTexture => lightmaps["lighting"];
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public static string editorTheme = "";
+        public static string[] editorThemes = new string[4];
 
         public static GameObject StripAllScripts(GameObject reference, bool stripColliders = false)
         {
@@ -200,7 +200,10 @@ namespace BaldiLevelEditor
             DontDestroyOnLoad(canvasTemplate);
             canvasTemplate.planeDistance = 100f;
             canvasTemplate.sortingOrder = 10;
-            editorTheme = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorB.mid"), "editor");
+            editorThemes[0] = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorA.mid"), "editorA");
+            editorThemes[1] = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorB.mid"), "editorB");
+            editorThemes[2] = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorC.mid"), "editorC");
+            editorThemes[3] = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorD.mid"), "editorD");
             lightmaps.Add("lighting", Resources.FindObjectsOfTypeAll<Texture2D>().Where(x => x.name == "LightMap").First());
 
             pickupPrefab = EditorObjectType.CreateFromGameObject<ItemPrefab, ItemLocation>("item", Resources.FindObjectsOfTypeAll<Pickup>().Where(x => x.transform.parent == null).First().gameObject, Vector3.up * 5f);
