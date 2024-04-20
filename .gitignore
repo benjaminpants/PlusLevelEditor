@@ -335,4 +335,5 @@ ASALocalRun/
 
 # Ignore Dependencies for legal reasons
 Dependencies/
-Releases/
+EditorReleases/
+FormatReleases/
