@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MTM101BaldAPI.UI;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -119,6 +121,41 @@ namespace BaldiLevelEditor.UI
         }
     }
 
+    public class LabelUIElement : UIElement
+    {
+
+        public TextAlignmentOptions alignment = TextAlignmentOptions.Center;
+        public BaldiFonts font;
+        public string text;
+        private Vector2 _size;
+        public Color color;
+
+        public LabelUIElement(Vector2 size, string text, Color? color = null, BaldiFonts font = BaldiFonts.ComicSans12, TextAlignmentOptions alignment = TextAlignmentOptions.Left)
+        {
+            this.text = text;
+            this.font = font;
+            this.color = color == null ? Color.black : color.Value;
+            this.alignment = alignment;
+            _size = size;
+        }
+
+        public override UIComponent ToComponent(RectTransform parent)
+        {
+            UILabelComponent component = (UILabelComponent)base.ToComponent(parent);
+            component.font = font;
+            component.text = text;
+            component.color = color;
+            component.alignment = alignment;
+            return component;
+        }
+
+        public override float width => _size.x;
+
+        public override float height => _size.y;
+
+        public override UIComponent componentPrefab => BaldiLevelEditorPlugin.Instance.assetMan.Get<UILabelComponent>("label");
+    }
+
     public class ButtonUIElement : ImageUIElement
     {
         Sprite highlightSprite;
@@ -191,7 +228,7 @@ namespace BaldiLevelEditor.UI
 
         public Type componentToAdd = typeof(UIMenuMono);
 
-        public RectTransform ToComponents(Transform parent, Vector2 sizeDelta)
+        public RectTransform ToComponents(Transform parent, Vector2 sizeDelta, object? targetObject = null)
         {
             Vector2 virtualPosition = Vector2.zero;
             RectTransform transform = new GameObject().AddComponent<RectTransform>();
@@ -204,6 +241,7 @@ namespace BaldiLevelEditor.UI
             transform.SetParent(parent, false);
             transform.name = "UIMenuRect";
             UIMenuMono behavior = (UIMenuMono)transform.gameObject.AddComponent(componentToAdd);
+            behavior.targetObject = targetObject;
             for (int i = 0; i < elements.Length; i++)
             {
                 UIComponent component = elements[i].element.ToComponent(transform);
@@ -260,6 +298,12 @@ namespace BaldiLevelEditor.UI
         public UIMenuBuilder AddImage(Sprite sprite, NextDirection nextdirection)
         {
             menuElements.Add(new MenuElement(nextdirection, new ImageUIElement(sprite)));
+            return this;
+        }
+
+        public UIMenuBuilder AddLabel(float sizeX, float sizeY, string text, NextDirection nextdirection)
+        {
+            menuElements.Add(new MenuElement(nextdirection, new LabelUIElement(new Vector2(sizeX, sizeY), text)));
             return this;
         }
 

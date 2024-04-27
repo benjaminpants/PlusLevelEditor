@@ -364,7 +364,7 @@ namespace BaldiLevelEditor
             },0.2f));
             gearAnimator.affectedObject = gears;
 
-            /*StandardMenuButton testButton = UIHelpers.CreateImage(GetUISprite("UITestButton"), canvas.transform, Vector3.zero, false).gameObject.ConvertToButton<StandardMenuButton>();
+            StandardMenuButton testButton = UIHelpers.CreateImage(GetUISprite("UITestButton"), canvas.transform, Vector3.zero, false).gameObject.ConvertToButton<StandardMenuButton>();
             testButton.OnPress.AddListener(() =>
             {
                 SwitchToMenu(new UIMenuBuilder()
@@ -377,6 +377,7 @@ namespace BaldiLevelEditor
                         Debug.Log(b.name);
                     },
                     NextDirection.Down)
+                    .AddLabel(100f,100f,"I LOVE BURGER!", NextDirection.Down)
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Left)
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Down)
                     .AddTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("Wall"), 0.25f, NextDirection.Right)
@@ -384,7 +385,7 @@ namespace BaldiLevelEditor
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Up)
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Right)
                     .Build());
-            });*/
+            });
 
             //gearAnimator.SetDefaultAnimation("spin", 1f);
             //TextMeshProUGUI text = UIHelpers.CreateText<TextMeshProUGUI>(BaldiFonts.ComicSans12, "EVERYTHING SEEN HERE IS SUBJECT TO CHANGE!", canvas.transform,new Vector3(-165f, 150f, 0f), false);

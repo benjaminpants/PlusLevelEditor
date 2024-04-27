@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -367,6 +368,9 @@ namespace BaldiLevelEditor
             UITextureComponent texturecomponent = UIComponent.CreateBase<UITextureComponent>();
             texturecomponent.gameObject.AddComponent<RawImage>();
             assetMan.Add<UIComponent>("texture", texturecomponent);
+            UILabelComponent labelcomponent = UIComponent.CreateBase<UILabelComponent>();
+            labelcomponent.gameObject.AddComponent<TextMeshProUGUI>();
+            assetMan.Add<UIComponent>("label", labelcomponent);
         }
 
 

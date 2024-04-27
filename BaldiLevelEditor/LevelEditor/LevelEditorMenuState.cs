@@ -40,7 +40,7 @@ namespace BaldiLevelEditor
             currentMenuBackground.SetActive(false);
         }
 
-        public void SwitchToMenu(UIMenu menu)
+        public void SwitchToMenu(UIMenu menu, object? targetObject = null)
         {
             state = LevelEditorState.InMenu;
             currentMenuBackground.SetActive(true);

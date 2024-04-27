@@ -7,6 +7,8 @@ namespace BaldiLevelEditor.UI
 {
     public class UIMenuMono : MonoBehaviour
     {
+        public object? targetObject;
+
         public virtual int SendInt(string id, int v)
         {
             return v;
