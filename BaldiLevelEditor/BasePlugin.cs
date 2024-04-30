@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -247,6 +248,7 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("merrygoround", objects.Where(x => x.name == "MerryGoRound_Object").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("tree", objects.Where(x => x.name == "TreeCG").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("appletree", objects.Where(x => x.name == "AppleTree").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("bananatree", objects.Where(x => x.name == "BananaTree").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("hoop", objects.Where(x => x.name == "HoopBase").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("payphone", objects.Where(x => x.name == "PayPhone").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("tapeplayer", objects.Where(x => x.name == "TapePlayer").Where(x => x.transform.parent == null).First(), Vector3.up * 5f));
@@ -330,6 +332,12 @@ namespace BaldiLevelEditor
             itemObjects.Add("apple", ItemMetaStorage.Instance.FindByEnum(Items.Apple).value);
             itemObjects.Add("swinglock", ItemMetaStorage.Instance.FindByEnum(Items.DoorLock).value);
             itemObjects.Add("portalposter", ItemMetaStorage.Instance.FindByEnum(Items.PortalPoster).value);
+            itemObjects.Add("banana", ItemMetaStorage.Instance.FindByEnum(Items.NanaPeel).value);
+            FieldInfo pointValue = AccessTools.Field(typeof(ITM_YTPs), "value");
+            ItemMetaData data = ItemMetaStorage.Instance.FindByEnum(Items.Points);
+            itemObjects.Add("points25", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 25));
+            itemObjects.Add("points50", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 50));
+            itemObjects.Add("points100", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 100));
 
             // tile based objects
             TiledEditorConnectable lockdownVisual = CreateTileVisualFromObject<TiledEditorConnectable, TiledPrefab>(objects.Where(x => x.name == "LockdownDoor").First());

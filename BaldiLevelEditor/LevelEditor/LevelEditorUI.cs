@@ -224,6 +224,20 @@ namespace BaldiLevelEditor
             new RotateAndPlacePrefab("chair"),
             new RotateAndPlacePrefab("bigdesk"),
             new ObjectTool("roundtable"),
+            new PrebuiltStructureTool("roundtable1", new EditorPrebuiltStucture(
+                new PrefabLocation("roundtable", new UnityVector3(0f,0f,0f)),
+                new PrefabLocation("chair", new UnityVector3(0f,0f,-5f)),
+                new PrefabLocation("chair", new UnityVector3(-5f,0f,0f), Quaternion.Euler(0f, 90f, 0f).ToData()),
+                new PrefabLocation("chair", new UnityVector3(0f,0f,5f), Quaternion.Euler(0f, 180f, 0f).ToData()),
+                new PrefabLocation("chair", new UnityVector3(5f,0f,0f), Quaternion.Euler(0f, 270f, 0f).ToData())
+                )),
+            new PrebuiltStructureTool("roundtable2", new EditorPrebuiltStucture(
+                new PrefabLocation("roundtable", new UnityVector3(0f,0f,0f)),
+                new PrefabLocation("chair", new UnityVector3(3.5355f,0f,-3.535f), Quaternion.Euler(0f, 315f, 0f).ToData()),
+                new PrefabLocation("chair", new UnityVector3(-3.5355f,0f,-3.535f), Quaternion.Euler(0f, 45f, 0f).ToData()),
+                new PrefabLocation("chair", new UnityVector3(-3.5355f,0f,3.535f), Quaternion.Euler(0f, 135f, 0f).ToData()),
+                new PrefabLocation("chair", new UnityVector3(3.5355f,0f,3.535f), Quaternion.Euler(0f, 225f, 0f).ToData())
+                )),
             new ObjectTool("cafeteriatable"),
             new ObjectTool("plant"),
             new ObjectTool("decor_pencilnotes"),
@@ -245,6 +259,7 @@ namespace BaldiLevelEditor
             new ObjectTool("merrygoround"),
             new ObjectTool("tree"),
             new ObjectTool("appletree"),
+            new ObjectTool("bananatree"),
             new ObjectTool("hopscotch"),
             new ObjectTool("hoop")),
             new ToolCategory("activities", GetUISprite("Activity_notebook"),
@@ -269,6 +284,7 @@ namespace BaldiLevelEditor
             new ItemTool("quarter"),
             new ItemTool("bsoda"),
             new ItemTool("zesty"),
+            new ItemTool("banana"),
             new ItemTool("scissors"),
             new ItemTool("boots"),
             new ItemTool("nosquee"),
@@ -282,7 +298,10 @@ namespace BaldiLevelEditor
             new ItemTool("teleporter"),
             new ItemTool("portalposter"),
             new ItemTool("grapple"),
-            new ItemTool("apple")),
+            new ItemTool("apple"),
+            new ItemTool("points25"),
+            new ItemTool("points50"),
+            new ItemTool("points100")),
             new ToolCategory("connectables", GetUISprite("Button_button"),
             new ButtonTool("button"),
             new TileBasedTool("lockdowndoor")),
@@ -364,7 +383,7 @@ namespace BaldiLevelEditor
             },0.2f));
             gearAnimator.affectedObject = gears;
 
-            StandardMenuButton testButton = UIHelpers.CreateImage(GetUISprite("UITestButton"), canvas.transform, Vector3.zero, false).gameObject.ConvertToButton<StandardMenuButton>();
+            /*StandardMenuButton testButton = UIHelpers.CreateImage(GetUISprite("UITestButton"), canvas.transform, Vector3.zero, false).gameObject.ConvertToButton<StandardMenuButton>();
             testButton.OnPress.AddListener(() =>
             {
                 SwitchToMenu(new UIMenuBuilder()
@@ -385,7 +404,7 @@ namespace BaldiLevelEditor
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Up)
                     .AddImage(GetUISprite("UITestButton"), NextDirection.Right)
                     .Build());
-            });
+            });*/
 
             //gearAnimator.SetDefaultAnimation("spin", 1f);
             //TextMeshProUGUI text = UIHelpers.CreateText<TextMeshProUGUI>(BaldiFonts.ComicSans12, "EVERYTHING SEEN HERE IS SUBJECT TO CHANGE!", canvas.transform,new Vector3(-165f, 150f, 0f), false);

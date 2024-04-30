@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -142,6 +143,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("merrygoround", objects.Where(x => x.name == "MerryGoRound_Object").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("tree", objects.Where(x => x.name == "TreeCG").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("appletree", objects.Where(x => x.name == "AppleTree").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("bananatree", objects.Where(x => x.name == "BananaTree").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("hoop", objects.Where(x => x.name == "HoopBase").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("payphone", objects.Where(x => x.name == "PayPhone").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("tapeplayer", objects.Where(x => x.name == "TapePlayer").Where(x => x.transform.parent == null).First());
@@ -189,6 +191,12 @@ namespace PlusLevelLoader
             itemObjects.Add("apple", ItemMetaStorage.Instance.FindByEnum(Items.Apple).value);
             itemObjects.Add("swinglock", ItemMetaStorage.Instance.FindByEnum(Items.DoorLock).value);
             itemObjects.Add("portalposter", ItemMetaStorage.Instance.FindByEnum(Items.PortalPoster).value);
+            itemObjects.Add("banana", ItemMetaStorage.Instance.FindByEnum(Items.NanaPeel).value);
+            FieldInfo pointValue = AccessTools.Field(typeof(ITM_YTPs), "value");
+            ItemMetaData data = ItemMetaStorage.Instance.FindByEnum(Items.Points);
+            itemObjects.Add("points25", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 25));
+            itemObjects.Add("points50", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 50));
+            itemObjects.Add("points100", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 100));
 
             buttons.Add("button", assetMan.Get<GameButtonBase>("GameButton"));
         }
@@ -197,8 +205,14 @@ namespace PlusLevelLoader
         {
             LoadingEvents.RegisterOnAssetsLoaded(OnAssetsLoaded, false);
             Instance = this;
-            Harmony harmony = new Harmony("mtm101.rulerp.baldiplus.leveleditor");
-            harmony.PatchAll();
+            Harmony harmony = new Harmony("mtm101.rulerp.baldiplus.levelloader");
+
+            Config.Bind("Bugfixes",
+                "Supress Banana Null Object Reference",
+                true,
+                "For an unknown reason, pre-placed bananas cause the console to get flooded with null object references.\nEnabling this suppress all NullObjectReference exceptions in the Banana and Entity update functions, so turn this off if you are debugging either of those.");
+
+            harmony.PatchAllConditionals();
         }
     }
 }
