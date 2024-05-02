@@ -68,6 +68,7 @@ namespace BaldiLevelEditor
 
     public class EditorLevel : Level
     {
+        public bool allowOOBDoors = false;
         public List<TiledArea> areas = new List<TiledArea>();
         public Dictionary<string, TextureContainer> defaultTextures = new Dictionary<string, TextureContainer>();
         public List<WallPlacement> manualWalls = new List<WallPlacement>();
@@ -360,6 +361,7 @@ namespace BaldiLevelEditor
 
         public void ValidateDoors()
         {
+            if (allowOOBDoors) return;
             List<DoorLocation> doorsToRemove = new List<DoorLocation>();
             for (int i = 0; i < doors.Count; i++)
             {

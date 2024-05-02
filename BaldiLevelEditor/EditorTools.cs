@@ -217,7 +217,7 @@ namespace BaldiLevelEditor
 
         public override void OnDirectionSelect(Direction dir, bool clicked)
         {
-            if (selectedPosition == null) throw new Exception();
+            if (selectedPosition == null) { OnPlacementFail(); return; }//throw new Exception("selectedPosition is null!");
             if (clicked)
             {
                 if (IsValidPlacement(selectedPosition.Value, dir))

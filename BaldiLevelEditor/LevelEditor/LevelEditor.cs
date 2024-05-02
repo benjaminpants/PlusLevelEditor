@@ -598,13 +598,13 @@ namespace BaldiLevelEditor
 
         public static bool DoorShouldOrientateTowardsRooms(string type)
         {
-            return !(PlusLevelLoaderPlugin.Instance.doorPrefabs[type] is SwingDoor);
+            return (!(PlusLevelLoaderPlugin.Instance.doorPrefabs[type] is SwingDoor));
         }
 
         public bool AddDoor(DoorLocation doorLoca, Type type)
         {
             // TODO: make this a bool of some kind, dont just bulk apply it to swing doors!
-            if ((DoorShouldOrientateTowardsRooms(doorLoca.type)))
+            if ((DoorShouldOrientateTowardsRooms(doorLoca.type)) && !level.allowOOBDoors)
             {
                 // do some editing to doorLoca to fix weird oddities
                 // only do this if we are in a hall room
