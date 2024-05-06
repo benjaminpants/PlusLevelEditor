@@ -6,6 +6,7 @@ using MTM101BaldAPI.OptionsAPI;
 using MTM101BaldAPI.Registers;
 using PlusLevelFormat;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -66,8 +67,10 @@ namespace PlusLevelLoader
             but.transform.SetParent(obj.transform, false);
         }*/
 
-        void OnAssetsLoaded()
+        IEnumerator OnAssetsLoaded()
         {
+            yield return 4;
+            yield return "Adding Texture Aliases...";
             assetMan.AddFromResources<Texture2D>();
             assetMan.AddFromResources<Material>();
             assetMan.AddFromResources<Door>();
@@ -89,6 +92,7 @@ namespace PlusLevelLoader
             textureAliases.Add("Fence", assetMan.Get<Texture2D>("fence"));
             textureAliases.Add("None", assetMan.Get<Texture2D>("Transparent"));
 
+            yield return "Setting Up Room Settings...";
             List<RoomFunctionContainer> roomFunctions = Resources.FindObjectsOfTypeAll<RoomFunctionContainer>().ToList();
             roomSettings.Add("hall", new RoomSettings(RoomCategory.Hall, RoomType.Hall, Color.white, assetMan.Get<StandardDoorMats>("ClassDoorSet")));
             roomSettings.Add("class", new RoomSettings(RoomCategory.Class, RoomType.Room, Color.green, assetMan.Get<StandardDoorMats>("ClassDoorSet"), assetMan.Get<Material>("MapTile_Classroom")));
@@ -106,7 +110,7 @@ namespace PlusLevelLoader
             roomSettings["cafeteria"].container = roomFunctions.Find(x => x.name == "CafeteriaRoomFunction");
             roomSettings["outside"].container = roomFunctions.Find(x => x.name == "PlaygroundRoomFunction");
 
-
+            yield return "Setting Up Prefabs...";
             windowObjects.Add("standard", assetMan.Get<WindowObject>("WoodWindow"));
             doorPrefabs.Add("standard", assetMan.Get<Door>("ClassDoor_Standard"));
             doorPrefabs.Add("swing", assetMan.Get<Door>("Door_Swinging"));
@@ -174,6 +178,7 @@ namespace PlusLevelLoader
             npcAliases.Add("cloudy", MTM101BaldiDevAPI.npcMetadata.Get(Character.Cumulo).value);
             npcAliases.Add("reflex", MTM101BaldiDevAPI.npcMetadata.Get(Character.DrReflex).value);
 
+            yield return "Setting Up Items...";
             itemObjects.Add("quarter", ItemMetaStorage.Instance.FindByEnum(Items.Quarter).value);
             itemObjects.Add("keys", ItemMetaStorage.Instance.FindByEnum(Items.DetentionKey).value);
             itemObjects.Add("zesty", ItemMetaStorage.Instance.FindByEnum(Items.ZestyBar).value);
@@ -192,25 +197,19 @@ namespace PlusLevelLoader
             itemObjects.Add("swinglock", ItemMetaStorage.Instance.FindByEnum(Items.DoorLock).value);
             itemObjects.Add("portalposter", ItemMetaStorage.Instance.FindByEnum(Items.PortalPoster).value);
             itemObjects.Add("banana", ItemMetaStorage.Instance.FindByEnum(Items.NanaPeel).value);
-            FieldInfo pointValue = AccessTools.Field(typeof(ITM_YTPs), "value");
-            ItemMetaData data = ItemMetaStorage.Instance.FindByEnum(Items.Points);
-            itemObjects.Add("points25", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 25));
-            itemObjects.Add("points50", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 50));
-            itemObjects.Add("points100", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 100));
+            itemObjects.Add("points25", ItemMetaStorage.Instance.GetPointsObject(25, true));
+            itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
+            itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
 
             buttons.Add("button", assetMan.Get<GameButtonBase>("GameButton"));
+            yield break;
         }
 
         void Awake()
         {
-            LoadingEvents.RegisterOnAssetsLoaded(OnAssetsLoaded, false);
+            LoadingEvents.RegisterOnAssetsLoaded(Info, OnAssetsLoaded(), false);
             Instance = this;
             Harmony harmony = new Harmony("mtm101.rulerp.baldiplus.levelloader");
-
-            Config.Bind("Bugfixes",
-                "Supress Banana Null Object Reference",
-                true,
-                "For an unknown reason, pre-placed bananas cause the console to get flooded with null object references.\nEnabling this suppress all NullObjectReference exceptions in the Banana and Entity update functions, so turn this off if you are debugging either of those.");
 
             harmony.PatchAllConditionals();
         }

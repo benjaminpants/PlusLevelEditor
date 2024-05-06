@@ -1,4 +1,5 @@
-﻿using MTM101BaldAPI.UI;
+﻿using MTM101BaldAPI;
+using MTM101BaldAPI.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,7 @@ namespace BaldiLevelEditor.UI
             obj.SetActive(false);
             obj.name = "UIPrefab_" + typeof(T).Name;
             obj.layer = LayerMask.NameToLayer("UI");
-            DontDestroyOnLoad(obj);
+            obj.ConvertToPrefab(false);
             return obj.AddComponent<T>();
         }
 

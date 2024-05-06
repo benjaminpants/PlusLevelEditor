@@ -1047,6 +1047,7 @@ namespace BaldiLevelEditor
                 selector.prefabRotations[0].SetActive(true);
                 if (Singleton<InputManager>.Instance.GetDigitalInput("MouseSubmit", false))
                 {
+                    if (hit.transform == null) return;
                     if (hit.transform.parent == selector.prefabRotations[0].transform)
                     {
                         selector.type = SelectorType.PrefabRotate;

@@ -91,7 +91,7 @@ namespace BaldiLevelEditor
                 obj.GetComponentsInChildren<Collider>().Do(x => Destroy(x));
             }
             obj.name = "REFERENCE_" + obj.name;
-            DontDestroyOnLoad(obj);
+            obj.ConvertToPrefab(false);
             reference.SetActive(active);
             return obj;
         }
@@ -164,25 +164,14 @@ namespace BaldiLevelEditor
             //cc.transform.SetParent(canvas.transform, false);
         }
 
-        void AssetsLoadedActual()
+        IEnumerator AssetsLoadedActual()
         {
-            if ((new Version(MTM101BaldiDevAPI.VersionNumber)) < (new Version("3.6.0.0")))
+            if ((new Version(MTM101BaldiDevAPI.VersionNumber)) < (new Version("4.0.0.0")))
             {
-                MTM101BaldiDevAPI.CauseCrash(this.Info, new Exception("Invalid API version, please use 3.6 or greater!"));
+                MTM101BaldiDevAPI.CauseCrash(this.Info, new Exception("Invalid API version, please use 4.0 or greater!"));
             }
-            try
-            {
-                AssetsLoaded();
-            }
-            catch(Exception e)
-            {
-                isFucked = true;
-                throw e;
-            }
-        }
-
-        void AssetsLoaded()
-        {
+            yield return 5;
+            yield return "Defining Variables...";
             assetMan.Add<Sprite>("clipboard", Resources.FindObjectsOfTypeAll<Sprite>().Where(x => x.name == "OptionsClipboard").First());
             spriteMaterial = Resources.FindObjectsOfTypeAll<Material>().Where(x => x.name == "SpriteStandard_Billboard").First();
             camera = Resources.FindObjectsOfTypeAll<GameCamera>().First();
@@ -199,7 +188,7 @@ namespace BaldiLevelEditor
             endingError.name = "Canvas Template";
             canvasTemplate = endingError;
             //GameObject.Destroy(canvasTemplate.GetComponent<GlobalCamCanvasAssigner>());
-            DontDestroyOnLoad(canvasTemplate);
+            canvasTemplate.gameObject.ConvertToPrefab(false);
             canvasTemplate.planeDistance = 100f;
             canvasTemplate.sortingOrder = 10;
             editorThemes[0] = AssetLoader.MidiFromFile(Path.Combine(AssetLoader.GetModPath(this), "EditorA.mid"), "editorA");
@@ -220,8 +209,9 @@ namespace BaldiLevelEditor
             coreGamePrefab = Resources.FindObjectsOfTypeAll<CoreGameManager>().First();
             endlessGameManager = Resources.FindObjectsOfTypeAll<EndlessGameManager>().First();
             Activity[] activites = Resources.FindObjectsOfTypeAll<Activity>();
-            assetMan.Add("Mixer_Sounds",Resources.FindObjectsOfTypeAll<UnityEngine.Audio.AudioMixer>().Where(x => x.name == "Sounds").First());
+            assetMan.Add("Mixer_Sounds", Resources.FindObjectsOfTypeAll<UnityEngine.Audio.AudioMixer>().Where(x => x.name == "Sounds").First());
 
+            yield return "Creating Editor Prefabs...";
             // prefabs
             GameObject[] objects = Resources.FindObjectsOfTypeAll<GameObject>();
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("desk", objects.Where(x => x.name == "Table_Test").First(), Vector3.zero));
@@ -267,14 +257,14 @@ namespace BaldiLevelEditor
             // ugly hopscotch hack
             GameObject hopActual = GameObject.Instantiate(objects.Where(x => x.name == "PlaygroundPavement").Where(x => x.transform.parent == null).First().transform.GetChild(0).gameObject);
             GameObject hopBase = new GameObject();
-            DontDestroyOnLoad(hopBase);
-            hopActual.transform.SetParent(hopBase.transform,true);
+            hopBase.ConvertToPrefab(false);
+            hopActual.transform.SetParent(hopBase.transform, true);
             hopBase.SetActive(false);
             hopActual.gameObject.SetActive(true);
             Destroy(hopActual.gameObject.GetComponent<Collider>());
             hopBase.transform.name = "EditorHopscotchBase";
             BoxCollider box = hopBase.gameObject.AddComponent<BoxCollider>();
-            box.size = new Vector3(20f,0.1f,20f);
+            box.size = new Vector3(20f, 0.1f, 20f);
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("hopscotch", hopBase, Vector3.zero, true));
 
 
@@ -290,13 +280,13 @@ namespace BaldiLevelEditor
             baseObject.transform.SetParent(cornerMathMachine.prefab.transform, false);
             baseObject.transform.localPosition = Vector3.zero;
             cornerMathMachine.prefab.gameObject.transform.eulerAngles = Vector3.zero;
-            baseObject.transform.eulerAngles = new Vector3(0f,45f,0f);
+            baseObject.transform.eulerAngles = new Vector3(0f, 45f, 0f);
             Destroy(cornerMathMachine.prefab.gameObject.GetComponent<MeshRenderer>());
             baseObject.SetActive(true);
             baseObject.name = "CornerRenderer";
 
             // characters
-
+            yield return "Creating NPC Prefabs...";
             characterObjects.Add("baldi", StripAllScripts(NPCMetaStorage.Instance.Get(Character.Baldi).value.gameObject, true));
             characterObjects.Add("principal", StripAllScripts(NPCMetaStorage.Instance.Get(Character.Principal).value.gameObject, true));
             characterObjects.Add("sweep", StripAllScripts(NPCMetaStorage.Instance.Get(Character.Sweep).value.gameObject, true));
@@ -314,7 +304,7 @@ namespace BaldiLevelEditor
             characterObjects.Add("reflex", StripAllScripts(NPCMetaStorage.Instance.Get(Character.DrReflex).value.gameObject, true));
 
             // items
-
+            yield return "Setting Up Items...";
             itemObjects.Add("quarter", ItemMetaStorage.Instance.FindByEnum(Items.Quarter).value);
             itemObjects.Add("keys", ItemMetaStorage.Instance.FindByEnum(Items.DetentionKey).value);
             itemObjects.Add("zesty", ItemMetaStorage.Instance.FindByEnum(Items.ZestyBar).value);
@@ -333,12 +323,11 @@ namespace BaldiLevelEditor
             itemObjects.Add("swinglock", ItemMetaStorage.Instance.FindByEnum(Items.DoorLock).value);
             itemObjects.Add("portalposter", ItemMetaStorage.Instance.FindByEnum(Items.PortalPoster).value);
             itemObjects.Add("banana", ItemMetaStorage.Instance.FindByEnum(Items.NanaPeel).value);
-            FieldInfo pointValue = AccessTools.Field(typeof(ITM_YTPs), "value");
-            ItemMetaData data = ItemMetaStorage.Instance.FindByEnum(Items.Points);
-            itemObjects.Add("points25", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 25));
-            itemObjects.Add("points50", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 50));
-            itemObjects.Add("points100", data.itemObjects.First(x => (int)pointValue.GetValue(x.item) == 100));
+            itemObjects.Add("points25", ItemMetaStorage.Instance.GetPointsObject(25, true));
+            itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
+            itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
 
+            yield return "Setting Up Tiled Editor Prefabs...";
             // tile based objects
             TiledEditorConnectable lockdownVisual = CreateTileVisualFromObject<TiledEditorConnectable, TiledPrefab>(objects.Where(x => x.name == "LockdownDoor").First());
             lockdownVisual.positionOffset = Vector3.up * 21f;
@@ -348,6 +337,7 @@ namespace BaldiLevelEditor
             playerColliderObject = StripAllScripts(Resources.FindObjectsOfTypeAll<PlayerManager>().First().gameObject).GetComponent<CapsuleCollider>();
             playerColliderObject.name = "Player Collider Reference";
 
+            yield return "Setting Misc Prefabs...";
             MainGameManager toCopy = Resources.FindObjectsOfTypeAll<MainGameManager>().First();
             GameObject newObject = new GameObject();
             newObject.SetActive(false);
@@ -360,8 +350,9 @@ namespace BaldiLevelEditor
             mainGameManager.ReflectionSetVariable("happyBaldiPre", Resources.FindObjectsOfTypeAll<HappyBaldi>().First());
             mainGameManager.ReflectionSetVariable("destroyOnLoad", true);
             mainGameManager.gameObject.name = "CustomEditorGameManager";
-            DontDestroyOnLoad(mainGameManager);
+            mainGameManager.gameObject.ConvertToPrefab(true);
             SetUpUIPrefabs();
+            yield break;
         }
 
         void SetUpUIPrefabs()
@@ -451,7 +442,7 @@ namespace BaldiLevelEditor
             assetMan.Get<SoundObject>("Audio/IncompatibleResolution").subtitle = true;
             assetMan.Get<SoundObject>("Audio/IncompatibleResolution").soundKey = "Please change your resolution in the options menu!";
             assetMan.Get<Sprite>("UI/DitherPattern").texture.wrapMode = TextureWrapMode.Repeat;
-            LoadingEvents.RegisterOnAssetsLoaded(AssetsLoadedActual, false);
+            LoadingEvents.RegisterOnAssetsLoaded(Info, AssetsLoadedActual(), false);
             harmony.PatchAllConditionals();
         }
     }
