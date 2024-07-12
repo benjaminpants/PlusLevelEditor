@@ -90,6 +90,7 @@ namespace PlusLevelLoader
             textureAliases.Add("ElevatorCeiling", assetMan.Get<Texture2D>("ElCeiling"));
             textureAliases.Add("Grass", assetMan.Get<Texture2D>("Grass"));
             textureAliases.Add("Fence", assetMan.Get<Texture2D>("fence"));
+            textureAliases.Add("JohnnyWall", assetMan.Get<Texture2D>("JohnnyWall"));
             textureAliases.Add("None", assetMan.Get<Texture2D>("Transparent"));
 
             yield return "Setting Up Room Settings...";
@@ -103,17 +104,20 @@ namespace PlusLevelLoader
             roomSettings.Add("library", new RoomSettings(RoomCategory.Special, RoomType.Room, new Color(0f, 1f, 1f), assetMan.Get<StandardDoorMats>("ClassDoorSet")));
             roomSettings.Add("cafeteria", new RoomSettings(RoomCategory.Special, RoomType.Room, new Color(0f, 1f, 1f), assetMan.Get<StandardDoorMats>("ClassDoorSet")));
             roomSettings.Add("outside", new RoomSettings(RoomCategory.Special, RoomType.Room, new Color(0f, 1f, 1f), assetMan.Get<StandardDoorMats>("ClassDoorSet")));
+            roomSettings.Add("shop", new RoomSettings(RoomCategory.Store, RoomType.Room, new Color(1f, 1f, 1f), assetMan.Get<StandardDoorMats>("ClassDoorSet")));
             roomSettings["faculty"].container = roomFunctions.Find(x => x.name == "FacultyRoomFunction");
             roomSettings["office"].container = roomFunctions.Find(x => x.name == "OfficeRoomFunction");
             roomSettings["class"].container = roomFunctions.Find(x => x.name == "ClassRoomFunction");
             roomSettings["library"].container = roomFunctions.Find(x => x.name == "LibraryRoomFunction");
             roomSettings["cafeteria"].container = roomFunctions.Find(x => x.name == "CafeteriaRoomFunction");
             roomSettings["outside"].container = roomFunctions.Find(x => x.name == "PlaygroundRoomFunction");
+            roomSettings["shop"].container = roomFunctions.Find(x => x.name == "JohnnyStoreRoomFunction");
 
             yield return "Setting Up Prefabs...";
             windowObjects.Add("standard", assetMan.Get<WindowObject>("WoodWindow"));
             doorPrefabs.Add("standard", assetMan.Get<Door>("ClassDoor_Standard"));
             doorPrefabs.Add("swing", assetMan.Get<Door>("Door_Swinging"));
+            doorPrefabs.Add("autodoor", assetMan.Get<Door>("Door_Auto"));
             doorPrefabs.Add("coin", assetMan.Get<Door>("Door_SwingingCoin"));
             doorPrefabs.Add("oneway", assetMan.Get<Door>("Door_SwingingOneWay")); //FilingCabinet_Tall
             doorPrefabs.Add("swingsilent", assetMan.Get<Door>("SilentDoor_Swinging"));
@@ -127,6 +131,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("roundtable", objects.Where(x => x.name == "RoundTable").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("locker", objects.Where(x => x.name == "Locker").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("bluelocker", objects.Where(x => x.name == "BlueLocker").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("greenlocker", objects.Where(x => x.name == "StorageLocker").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("decor_pencilnotes", objects.Where(x => x.name == "Decor_PencilNotes").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("decor_papers", objects.Where(x => x.name == "Decor_Papers").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("decor_globe", objects.Where(x => x.name == "Decor_Globe").Where(x => x.transform.parent == null).First());
@@ -136,6 +141,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("bookshelf_hole", objects.Where(x => x.name == "Bookshelf_Hole_Object").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("rounddesk", objects.Where(x => x.name == "RoundDesk").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("cafeteriatable", objects.Where(x => x.name == "CafeteriaTable").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("dietbsodamachine", objects.Where(x => x.name == "DietSodaMachine").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("bsodamachine", objects.Where(x => x.name == "SodaMachine").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("zestymachine", objects.Where(x => x.name == "ZestyMachine").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("crazymachine_bsoda", objects.Where(x => x.name == "CrazyVendingMachineBSODA").Where(x => x.transform.parent == null).First());
@@ -184,6 +190,7 @@ namespace PlusLevelLoader
             itemObjects.Add("zesty", ItemMetaStorage.Instance.FindByEnum(Items.ZestyBar).value);
             itemObjects.Add("whistle", ItemMetaStorage.Instance.FindByEnum(Items.PrincipalWhistle).value);
             itemObjects.Add("teleporter", ItemMetaStorage.Instance.FindByEnum(Items.Teleporter).value);
+            itemObjects.Add("dietbsoda", ItemMetaStorage.Instance.FindByEnum(Items.DietBsoda).value);
             itemObjects.Add("bsoda", ItemMetaStorage.Instance.FindByEnum(Items.Bsoda).value);
             itemObjects.Add("boots", ItemMetaStorage.Instance.FindByEnum(Items.Boots).value);
             itemObjects.Add("clock", ItemMetaStorage.Instance.FindByEnum(Items.AlarmClock).value);

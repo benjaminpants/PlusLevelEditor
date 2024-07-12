@@ -473,7 +473,7 @@ namespace BaldiLevelEditor
             updateDelay = 0.1f;
             CursorController.Instance.DisableClick(false);
             audMan.FlushQueue(true);
-            audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("BellGeneric"));
+            audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("CashBell"));
             yield break;
         }
 

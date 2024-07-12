@@ -313,6 +313,15 @@ namespace BaldiLevelEditor
             renderer.materials[1].SetMainTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("CoinDoor"));
         }
     }
+    public class AutoDoorEditorVisual : DoorEditorVisual
+    {
+        public override void SetupMaterials(MeshRenderer renderer, bool outside)
+        {
+            base.SetupMaterials(renderer, outside);
+            renderer.materials[0].SetMaskTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("AutoDoor_Mask"));
+            renderer.materials[1].SetMainTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("AutoDoor_Unlocked_Closed"));
+        }
+    }
     public class OneWaySwingEditorVisual : DoorEditorVisual
     {
         public override void SetupMaterials(MeshRenderer renderer, bool outside)

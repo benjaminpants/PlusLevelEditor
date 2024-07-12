@@ -121,6 +121,15 @@ namespace BaldiLevelEditor
             {
                 yield return null;
             }
+            // this is slow AF but who actually cares
+            for (int x = 0; x < lightmapTexture.width; x++)
+            {
+                for (int y = 0; y < lightmapTexture.height; y++)
+                {
+                    lightmapTexture.SetPixel(x,y,Color.white);
+                }
+            }
+            lightmapTexture.Apply();
             GameCamera cam = GameObject.Instantiate<GameCamera>(camera);
             Shader.SetGlobalTexture("_Skybox", cubemap);
             Shader.SetGlobalColor("_SkyboxColor", Color.white);
@@ -223,10 +232,12 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("roundtable", objects.Where(x => x.name == "RoundTable").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("locker", objects.Where(x => x.name == "Locker").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("bluelocker", objects.Where(x => x.name == "BlueLocker").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("greenlocker", objects.Where(x => x.name == "StorageLocker").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("bookshelf", objects.Where(x => x.name == "Bookshelf_Object").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("bookshelf_hole", objects.Where(x => x.name == "Bookshelf_Hole_Object").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("rounddesk", objects.Where(x => x.name == "RoundDesk").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("cafeteriatable", objects.Where(x => x.name == "CafeteriaTable").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("dietbsodamachine", objects.Where(x => x.name == "DietSodaMachine").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("bsodamachine", objects.Where(x => x.name == "SodaMachine").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("zestymachine", objects.Where(x => x.name == "ZestyMachine").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("crazymachine_bsoda", objects.Where(x => x.name == "CrazyVendingMachineBSODA").Where(x => x.transform.parent == null).First(), Vector3.zero));
@@ -310,6 +321,7 @@ namespace BaldiLevelEditor
             itemObjects.Add("zesty", ItemMetaStorage.Instance.FindByEnum(Items.ZestyBar).value);
             itemObjects.Add("whistle", ItemMetaStorage.Instance.FindByEnum(Items.PrincipalWhistle).value);
             itemObjects.Add("teleporter", ItemMetaStorage.Instance.FindByEnum(Items.Teleporter).value);
+            itemObjects.Add("dietbsoda", ItemMetaStorage.Instance.FindByEnum(Items.DietBsoda).value);
             itemObjects.Add("bsoda", ItemMetaStorage.Instance.FindByEnum(Items.Bsoda).value);
             itemObjects.Add("boots", ItemMetaStorage.Instance.FindByEnum(Items.Boots).value);
             itemObjects.Add("clock", ItemMetaStorage.Instance.FindByEnum(Items.AlarmClock).value);
@@ -411,6 +423,7 @@ namespace BaldiLevelEditor
             Harmony harmony = new Harmony("mtm101.rulerp.baldiplus.leveleditor");
             //CustomOptionsCore.OnMenuInitialize += OptMenPlaceholder;
             Instance = this;
+            AddSolidColorLightmap("white", Color.white);
             AddSolidColorLightmap("yellow", Color.yellow);
             AddSolidColorLightmap("red", Color.red);
             AddSolidColorLightmap("green", Color.green);
@@ -432,6 +445,7 @@ namespace BaldiLevelEditor
             assetMan.Add<Sprite>("LinkSprite", AssetLoader.SpriteFromTexture2D(AssetLoader.TextureFromMod(this, "LinkSprite.png"), 40f));
             doorTypes.Add("standard", typeof(DoorEditorVisual));
             doorTypes.Add("swing", typeof(SwingEditorVisual));
+            doorTypes.Add("autodoor", typeof(AutoDoorEditorVisual));
             doorTypes.Add("swingsilent", typeof(SilentSwingEditorVisual));
             doorTypes.Add("coin", typeof(CoinSwingEditorVisual));
             doorTypes.Add("oneway", typeof(OneWaySwingEditorVisual));

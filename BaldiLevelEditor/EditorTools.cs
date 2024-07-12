@@ -123,7 +123,7 @@ namespace BaldiLevelEditor
             PlusLevelEditor instance = Singleton<PlusLevelEditor>.Instance;
             instance.StartCoroutine(SpawnObjects(instance, dir, selectedPosition.Value));
             instance.updateDelay = _structure.prefabs.Count * 0.05f;
-            Singleton<PlusLevelEditor>.Instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Xylophone"));
+            Singleton<PlusLevelEditor>.Instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("NotebookCollect"));
             Singleton<PlusLevelEditor>.Instance.SelectTool(null);
         }
 
@@ -460,7 +460,7 @@ namespace BaldiLevelEditor
             if (IsOutOfBounds(vector)) return;
             if (!HasArea(vector)) return;
             PlusLevelEditor instance = Singleton<PlusLevelEditor>.Instance;
-            instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("BellGeneric"));
+            instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("CashBell"));
             instance.AddNPC(new NPCLocation()
             {
                 position = vector.ToByte(),
@@ -978,7 +978,7 @@ namespace BaldiLevelEditor
                 if ((hitTransform.name == "Door"))
                 {
                     instance.level.doors.Remove(hitTransform.parent.GetComponent<DoorEditorVisual>().typedPrefab);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -996,7 +996,7 @@ namespace BaldiLevelEditor
                 else if ((hitTransform.name == "ManualWall"))
                 {
                     instance.level.manualWalls.Remove(hitTransform.parent.GetComponent<ManualWallEditorVisual>().typedPrefab);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -1005,7 +1005,7 @@ namespace BaldiLevelEditor
                 else if ((hitTransform.name == "ButtonVisual"))
                 {
                     instance.level.editorButtons.Remove(hitTransform.parent.GetComponent<ButtonEditorVisual>().typedPrefab);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -1014,7 +1014,7 @@ namespace BaldiLevelEditor
                 else if ((hitTransform.name == "ObjectLocation"))
                 {
                     hitTransform.GetComponent<IEditor3D>().DestroyObject(instance.level);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -1023,7 +1023,7 @@ namespace BaldiLevelEditor
                 else if ((hitTransform.name == "NPCCollider"))
                 {
                     instance.level.npcSpawns.Remove(hitTransform.parent.GetComponent<NPCSpawnLocation>().typedPrefab);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -1032,7 +1032,7 @@ namespace BaldiLevelEditor
                 else if ((hitTransform.name == "TileLocation"))
                 {
                     hitTransform.GetComponent<ITileVisual>().DestroyObject(instance.level);
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     instance.RefreshLevel();
                     instance.UpdateLines();
                     instance.SelectTool(null);
@@ -1045,7 +1045,7 @@ namespace BaldiLevelEditor
             {
                 if (instance.level.areas[i].VectorIsInArea(vector.ToByte()))
                 {
-                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Explosion"));
+                    instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("GlassBreak"));
                     ushort id = instance.level.areas[i].roomId;
                     instance.level.areas.RemoveAt(i);
                     instance.level.RemoveRoomIfNoReferences(id);
