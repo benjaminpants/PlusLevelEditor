@@ -17,7 +17,7 @@ using UnityEngine;
 namespace PlusLevelLoader
 {
 
-    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.0.0.0")]
+    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.1.0.0")]
     public class PlusLevelLoaderPlugin : BaseUnityPlugin
     {
         public static PlusLevelLoaderPlugin Instance;
@@ -152,6 +152,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("ceilingfan", objects.Where(x => x.name == "CeilingFan").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("merrygoround", objects.Where(x => x.name == "MerryGoRound_Object").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("tree", objects.Where(x => x.name == "TreeCG").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("pinetree", objects.Where(x => x.name == "PineTree").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("appletree", objects.Where(x => x.name == "AppleTree").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("bananatree", objects.Where(x => x.name == "BananaTree").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("hoop", objects.Where(x => x.name == "HoopBase").Where(x => x.transform.parent == null).First());
