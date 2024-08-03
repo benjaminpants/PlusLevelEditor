@@ -48,7 +48,7 @@ namespace BaldiLevelEditor
             MeshFilter filter = obj.AddComponent<MeshFilter>();
             filter.mesh = BaldiLevelEditorPlugin.Instance.assetMan.Get<Mesh>("Quad");
             MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
-            renderer.material = new Material(BaldiLevelEditorPlugin.Instance.assetMan.Get<Shader>("Shader Graphs/TileStandard"));
+            renderer.material = new Material(BaldiLevelEditorPlugin.tileStandardShader);
             renderer.material.SetTexture("_LightMap", Texture2D.whiteTexture);
             renderer.material.SetMainTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("Grid"));
             obj.transform.SetParent(transform, false);

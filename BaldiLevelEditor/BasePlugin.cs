@@ -66,9 +66,9 @@ namespace BaldiLevelEditor
         public static CapsuleCollider playerColliderObject;
 
         public static Dictionary<string, Texture2D> lightmaps = new Dictionary<string, Texture2D>();
-        public static Shader tileStandardShader => Instance.assetMan.Get<Shader>("Shader Graphs/TileStandard");
+        public static Shader tileStandardShader => Instance.assetMan.Get<Shader>("Shader Graphs/TileStandard_AlphaClip");
         public static Shader tileMaskedShader => Instance.assetMan.Get<Shader>("Shader Graphs/MaskedStandard");
-        public static Shader tilePosterShader => Instance.assetMan.Get<Shader>("Shader Graphs/TileStandardWPoster");
+        public static Shader tilePosterShader => Instance.assetMan.Get<Shader>("Shader Graphs/TileStandardWPoster_AlphaClip");
         public static Material spriteMaterial;
         public static ElevatorScreen elevatorScreen;
         public static CoreGameManager coreGamePrefab;
