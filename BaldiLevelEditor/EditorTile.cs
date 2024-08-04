@@ -35,6 +35,8 @@ namespace BaldiLevelEditor
         void Start()
         {
             _tile = GameObject.Instantiate<Tile>(BaldiLevelEditorPlugin.Instance.tilePrefab, this.transform);
+            _tile.MeshRenderer.sharedMaterial.shader = BaldiLevelEditorPlugin.tileAlphaShader; // Use alpha shader to fix outside rendering bug
+
             GameObject clone = GameObject.Instantiate(_tile.Collider(Direction.North), transform);
             clone.transform.localPosition = Vector3.zero;
             clone.transform.eulerAngles = new Vector3(90f, 0f, 0f);
@@ -48,7 +50,7 @@ namespace BaldiLevelEditor
             MeshFilter filter = obj.AddComponent<MeshFilter>();
             filter.mesh = BaldiLevelEditorPlugin.Instance.assetMan.Get<Mesh>("Quad");
             MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
-            renderer.material = new Material(BaldiLevelEditorPlugin.tileStandardShader);
+            renderer.material = new Material(BaldiLevelEditorPlugin.tileAlphaShader);
             renderer.material.SetTexture("_LightMap", Texture2D.whiteTexture);
             renderer.material.SetMainTexture(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("Grid"));
             obj.transform.SetParent(transform, false);

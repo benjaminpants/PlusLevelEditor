@@ -96,8 +96,8 @@ namespace BaldiLevelEditor
             dummyRC.baseMat = new Material(BaldiLevelEditorPlugin.tileStandardShader);
             dummyRC.posterMat = new Material(BaldiLevelEditorPlugin.tilePosterShader);
 
-            dummyRC.defaultAlphaMat = new Material(BaldiLevelEditorPlugin.tileStandardShader);
-            dummyRC.defaultAlphaPosterMap = new Material(BaldiLevelEditorPlugin.tileStandardShader);
+            dummyRC.defaultAlphaMat = new Material(BaldiLevelEditorPlugin.tileAlphaShader);
+            dummyRC.defaultAlphaPosterMap = new Material(BaldiLevelEditorPlugin.tilePosterAlphaShader);
 
             dummyRC.florTex = PlusLevelLoaderPlugin.TextureFromAlias(container.floor);
             dummyRC.wallTex = PlusLevelLoaderPlugin.TextureFromAlias(container.wall);
