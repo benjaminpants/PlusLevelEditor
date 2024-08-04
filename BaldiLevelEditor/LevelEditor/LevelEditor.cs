@@ -93,8 +93,12 @@ namespace BaldiLevelEditor
             GameObject dummyObject = new GameObject();
             dummyObject.SetActive(false);
             RoomController dummyRC = dummyObject.AddComponent<RoomController>();
-            dummyRC.baseMat = new Material(BaldiLevelEditorPlugin.Instance.assetMan.Get<Shader>("Shader Graphs/TileStandard"));
-            dummyRC.posterMat = new Material(BaldiLevelEditorPlugin.Instance.assetMan.Get<Shader>("Shader Graphs/TileStandard"));
+            dummyRC.baseMat = new Material(BaldiLevelEditorPlugin.tileStandardShader);
+            dummyRC.posterMat = new Material(BaldiLevelEditorPlugin.tilePosterShader);
+
+            dummyRC.defaultAlphaMat = new Material(BaldiLevelEditorPlugin.tileStandardShader);
+            dummyRC.defaultAlphaPosterMap = new Material(BaldiLevelEditorPlugin.tileStandardShader);
+
             dummyRC.florTex = PlusLevelLoaderPlugin.TextureFromAlias(container.floor);
             dummyRC.wallTex = PlusLevelLoaderPlugin.TextureFromAlias(container.wall);
             dummyRC.ceilTex = PlusLevelLoaderPlugin.TextureFromAlias(container.ceiling);
