@@ -17,7 +17,7 @@ using UnityEngine;
 namespace PlusLevelLoader
 {
 
-    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.1.0.0")]
+    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.1.0.1")]
     public class PlusLevelLoaderPlugin : BaseUnityPlugin
     {
         public static PlusLevelLoaderPlugin Instance;
