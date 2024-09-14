@@ -1,5 +1,4 @@
 ﻿using BaldiLevelEditor.Types;
-using BaldiLevelEditor.UI;
 using BepInEx;
 using HarmonyLib;
 using MTM101BaldAPI;
@@ -369,25 +368,7 @@ namespace BaldiLevelEditor
             mainGameManager.ReflectionSetVariable("destroyOnLoad", true);
             mainGameManager.gameObject.name = "CustomEditorGameManager";
             mainGameManager.gameObject.ConvertToPrefab(true);
-            SetUpUIPrefabs();
             yield break;
-        }
-
-        void SetUpUIPrefabs()
-        {
-            UIImageComponent imagecomponent = UIComponent.CreateBase<UIImageComponent>();
-            imagecomponent.gameObject.AddComponent<Image>();
-            assetMan.Add<UIComponent>("image", imagecomponent);
-            UIButtonComponent buttoncomponent = UIComponent.CreateBase<UIButtonComponent>();
-            buttoncomponent.gameObject.AddComponent<Image>();
-            buttoncomponent.button = buttoncomponent.gameObject.ConvertToButton<StandardMenuButton>();
-            assetMan.Add<UIComponent>("button", buttoncomponent);
-            UITextureComponent texturecomponent = UIComponent.CreateBase<UITextureComponent>();
-            texturecomponent.gameObject.AddComponent<RawImage>();
-            assetMan.Add<UIComponent>("texture", texturecomponent);
-            UILabelComponent labelcomponent = UIComponent.CreateBase<UILabelComponent>();
-            labelcomponent.gameObject.AddComponent<TextMeshProUGUI>();
-            assetMan.Add<UIComponent>("label", labelcomponent);
         }
 
 

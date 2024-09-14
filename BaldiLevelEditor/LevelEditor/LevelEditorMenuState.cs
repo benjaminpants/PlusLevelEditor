@@ -1,5 +1,4 @@
-﻿using BaldiLevelEditor.UI;
-using MTM101BaldAPI.UI;
+﻿using MTM101BaldAPI.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,13 +37,6 @@ namespace BaldiLevelEditor
             image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
             image.type = Image.Type.Tiled;*/
             currentMenuBackground.SetActive(false);
-        }
-
-        public void SwitchToMenu(UIMenu menu, object? targetObject = null)
-        {
-            state = LevelEditorState.InMenu;
-            currentMenuBackground.SetActive(true);
-            menu.ToComponents(currentMenuBackground.transform, new Vector2(480,360)/*canvas.gameObject.GetComponent<RectTransform>().sizeDelta*/);
         }
     }
 }
