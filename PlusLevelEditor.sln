@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlusLevelFormat", "PlusLevelEditor\PlusLevelFormat.csproj", "{9E0DAC1B-B4E1-424E-B516-082A24BB32FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlusLevelFormat", "PlusLevelFormat\PlusLevelFormat.csproj", "{9E0DAC1B-B4E1-424E-B516-082A24BB32FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaldiLevelEditor", "BaldiLevelEditor\BaldiLevelEditor.csproj", "{A67AE404-4848-4F21-9BE5-6AD1DB6B9172}"
 EndProject
