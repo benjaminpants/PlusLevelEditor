@@ -15,9 +15,25 @@ namespace PlusLevelFormat
             writer.Write((byte)prefab.direction);
         }
 
+        public static void Write(this BinaryWriter writer, PosterLocation prefab)
+        {
+            writer.Write(prefab.type);
+            writer.Write(prefab.position);
+            writer.Write((byte)prefab.direction);
+        }
+
         public static TiledPrefab ReadTiledPrefab(this BinaryReader reader)
         {
             TiledPrefab newPf = new TiledPrefab();
+            newPf.type = reader.ReadString();
+            newPf.position = reader.ReadByteVector2();
+            newPf.direction = (PlusDirection)reader.ReadByte();
+            return newPf;
+        }
+
+        public static PosterLocation ReadPoster(this BinaryReader reader)
+        {
+            PosterLocation newPf = new PosterLocation();
             newPf.type = reader.ReadString();
             newPf.position = reader.ReadByteVector2();
             newPf.direction = (PlusDirection)reader.ReadByte();

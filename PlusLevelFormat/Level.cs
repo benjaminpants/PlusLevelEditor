@@ -96,6 +96,12 @@ namespace PlusLevelFormat
             {
                 writer.Write(level.tiledPrefabs[i]);
             }
+            // write posters
+            writer.Write(level.posters.Count);
+            for (int i = 0; i < level.posters.Count; i++)
+            {
+                writer.Write(level.posters[i]);
+            }
         }
 
         public static Level ReadLevel(this BinaryReader reader)
@@ -174,13 +180,19 @@ namespace PlusLevelFormat
             {
                 newLevel.tiledPrefabs.Add(reader.ReadTiledPrefab());
             }
+            if (version <= 4) return newLevel;
+            int posterCount = reader.ReadInt32();
+            for (int i = 0; i < posterCount; i++)
+            {
+                newLevel.posters.Add(reader.ReadPoster());
+            }
             return newLevel;
         }
     }
 
     public class Level
     {
-        public const byte version = 4;
+        public const byte version = 5;
         public Tile[,] tiles = new Tile[1,1];
         public bool[,] entitySafeTiles = new bool[1, 1];
         public bool[,] eventSafeTiles = new bool[1, 1];
