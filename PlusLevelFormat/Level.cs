@@ -250,6 +250,7 @@ namespace PlusLevelFormat
                 if (_oldToNew.ContainsKey(kvp.Value))
                 {
                     // what the fuck? this didnt occur in net 2.1, what changed?
+                    // (specifically it always occurs with 0, todo: investigate?)
                     continue;
                 }
                 _oldToNew.Add(kvp.Value, newRoomIds[kvp.Key]);
