@@ -44,6 +44,7 @@ namespace PlusLevelLoader
         public Dictionary<string, NPC> npcAliases = new Dictionary<string, NPC>();
         public Dictionary<string, ItemObject> itemObjects = new Dictionary<string, ItemObject>();
         public Dictionary<string, GameButtonBase> buttons = new Dictionary<string, GameButtonBase>(); //rest in pieces lever...
+        public Dictionary<string, PosterObject> posters = new Dictionary<string, PosterObject>();
 
         /*void OptMenPlaceholder(OptionsMenu __instance)
         {
@@ -208,7 +209,13 @@ namespace PlusLevelLoader
             itemObjects.Add("points25", ItemMetaStorage.Instance.GetPointsObject(25, true));
             itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
             itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
-
+            Resources.FindObjectsOfTypeAll<PosterObject>().Do(x =>
+            {
+                if (x.GetInstanceID() >= 0)
+                {
+                    posters.Add(x.name, x);
+                }
+            });
             buttons.Add("button", assetMan.Get<GameButtonBase>("GameButton"));
             yield break;
         }

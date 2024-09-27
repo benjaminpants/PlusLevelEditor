@@ -100,6 +100,11 @@ namespace PlusLevelFormat
         public PlusDirection direction = PlusDirection.Null;
     }
 
+    public class PosterLocation : TiledPrefab
+    {
+
+    }
+
     public class WindowLocation : TiledPrefab
     {
         //public string type = "null";
@@ -132,7 +137,7 @@ namespace PlusLevelFormat
         public int index;
         public PlusReceiverType type;
 
-        public static ConnectionData? FromPrefab(Level level, PrefabLocation location)
+        public static ConnectionData FromPrefab(Level level, PrefabLocation location)
         {
             int roomId = level.rooms.FindIndex(x => x.prefabs.Contains(location));
             if (roomId == -1) return null;
@@ -146,7 +151,7 @@ namespace PlusLevelFormat
             };
         }
 
-        public static ConnectionData? FromTileBased(Level level, TiledPrefab location)
+        public static ConnectionData FromTileBased(Level level, TiledPrefab location)
         {
             int index = level.tiledPrefabs.IndexOf(location);
             if (index == -1) return null;
@@ -168,12 +173,12 @@ namespace PlusLevelFormat
 
     public interface IEditorLocation
     {
-        public UnityVector3 position { get; set; }
+        UnityVector3 position { get; set; }
     }
 
     public class RoomProperties
     {
-        public RoomActivity? activity;
+        public RoomActivity activity;
         public string type = "null";
         public TextureContainer textures = new TextureContainer();
         public List<PrefabLocation> prefabs = new List<PrefabLocation>();

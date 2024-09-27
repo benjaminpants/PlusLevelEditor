@@ -10,11 +10,11 @@ namespace BaldiLevelEditor
    
     public interface IEditorConnectable
     {
-        public Vector3 connectionPosition { get; }
-        public bool isTiled { get; }
-        public PrefabLocation locationPrefab { get; }
-        public TiledPrefab tiledPrefab { get; }
-        public string highlight { get; set; }
+        Vector3 connectionPosition { get; }
+        bool isTiled { get; }
+        PrefabLocation locationPrefab { get; }
+        TiledPrefab tiledPrefab { get; }
+        string highlight { get; set; }
     }
 
     public class TiledEditorConnectable : TileBasedVisualBase, IEditorConnectable

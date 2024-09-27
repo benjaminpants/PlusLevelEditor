@@ -15,7 +15,7 @@ namespace BaldiLevelEditor
     public abstract class EditorTool
     {
         public abstract Sprite editorSprite { get; }
-        public Transform? hitTransform;
+        public Transform hitTransform;
         public abstract void OnHover(IntVector2 vector);
         public abstract void OnDrop(IntVector2 vector);
         public virtual void Reset()
@@ -41,7 +41,7 @@ namespace BaldiLevelEditor
             return false;
         }
 
-        protected TiledArea? GetAreaAtPos(IntVector2 pos)
+        protected TiledArea GetAreaAtPos(IntVector2 pos)
         {
             if (IsOutOfBounds(pos)) return null;
             PlusLevelEditor instance = Singleton<PlusLevelEditor>.Instance;
@@ -509,7 +509,7 @@ namespace BaldiLevelEditor
 
         public override bool IsVectorValidSpot(IntVector2 vector)
         {
-            TiledArea? ta = GetAreaAtPos(vector);
+            TiledArea ta = GetAreaAtPos(vector);
             if (ta == null) return false;
             return base.IsVectorValidSpot(vector) && (Singleton<PlusLevelEditor>.Instance.level.rooms[ta.roomId - 1].activity == null);
         }
@@ -642,9 +642,9 @@ namespace BaldiLevelEditor
     public class ConnectTool : EditorTool
     {
         private bool inSecondPhase;
-        private IEditorConnectable? connectTo;
-        private ButtonEditorVisual? buttonFromVisual;
-        private EditorButtonPlacement? buttonFrom
+        private IEditorConnectable connectTo;
+        private ButtonEditorVisual buttonFromVisual;
+        private EditorButtonPlacement buttonFrom
         {
             get
             {
@@ -788,7 +788,7 @@ namespace BaldiLevelEditor
             if (IsOutOfBounds(vector)) return;
             if (inSecondPhase)
             {
-                TiledArea? area = GetAreaAtPos(vector);
+                TiledArea area = GetAreaAtPos(vector);
                 if (area == null) return;
                 areas[1] = area;
                 if (instance.level.rooms[areas[0].roomId - 1].type != instance.level.rooms[areas[1].roomId - 1].type)
@@ -808,7 +808,7 @@ namespace BaldiLevelEditor
             }
             else
             {
-                TiledArea? area = GetAreaAtPos(vector);
+                TiledArea area = GetAreaAtPos(vector);
                 if (area == null) return;
                 areas[0] = area;
                 inSecondPhase = true;
@@ -839,7 +839,7 @@ namespace BaldiLevelEditor
                 });
                 //HighlightTiles(areas[0].CalculateOwnedTiles(), "green");
             }
-            TiledArea? area = GetAreaAtPos(vector);
+            TiledArea area = GetAreaAtPos(vector);
             if (area == null) return;
             if (area == areas[0]) return;
             if (areas[0] != null)

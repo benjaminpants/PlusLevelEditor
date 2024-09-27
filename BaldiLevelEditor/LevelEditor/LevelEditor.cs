@@ -43,19 +43,19 @@ namespace BaldiLevelEditor
 
         static FieldInfo _useRawPosition = AccessTools.Field(typeof(CursorController), "useRawPosition");
         static FieldInfo _deltaThisFrame = AccessTools.Field(typeof(CursorController), "deltaThisFrame");
-        public GameCamera? myCamera;
+        public GameCamera myCamera;
         public AudioManager audMan;
-        public Canvas? canvas;
-        public CursorController? cursor;
+        public Canvas canvas;
+        public CursorController cursor;
         public Transform myPawn; //the "pawn" that controls the camera and movement
         public Transform tileMap; // the transform used to store all the tiles
-        public EnvironmentController? puppetEnvironmentController = null; // a puppet enviroment controller used to generate texture atlas' and tile meshess.
+        public EnvironmentController puppetEnvironmentController = null; // a puppet enviroment controller used to generate texture atlas' and tile meshess.
         public EditorLevel level = new EditorLevel(50, 50);
         public EditorTile[,] edTiles;
         public IntVector2 selectorLocation = new IntVector2(-1, 0); //the current location of the selector
         public IntVector2 highlightedLocation = new IntVector2(-1, 0); //the current location that the cursor is hovering over
         public EditorSelector selector; // the selector that has the arrow handles
-        public AreaData? selectedArea;
+        public AreaData selectedArea;
         public List<IWallVisual> wallVisuals = new List<IWallVisual>();
         public List<IEditor3D> prefabVisuals = new List<IEditor3D>();
         public List<ITileVisual> tiledVisuals = new List<ITileVisual>();
@@ -66,7 +66,7 @@ namespace BaldiLevelEditor
         public List<EditorLine> lines = new List<EditorLine>();
         //public List<NPCSpawnLocation> npcVisuals = new List<NPCSpawnLocation>();
         public Transform dummyColliderTransform;
-        public EditorTool? selectedTool;
+        public EditorTool selectedTool;
         public Vector3 cameraRotation = new Vector3(0f, 0f, 0f);
         private Ray ray;
         private RaycastHit hit;
@@ -75,7 +75,7 @@ namespace BaldiLevelEditor
         bool initializedDummy = false;
         public float updateDelay = 0f;
         private int prefabHighlight = -1;
-        private IEditor3D? selectedPrefab => (prefabHighlight == -1) ? null : prefabVisuals[prefabHighlight];
+        private IEditor3D selectedPrefab => (prefabHighlight == -1) ? null : prefabVisuals[prefabHighlight];
         public Vector3? prefabHandleStart = null;
         public Vector3? prefabHandleOffset = null;
         public Vector3? prefabHandleEnd = null;
@@ -111,7 +111,7 @@ namespace BaldiLevelEditor
             return atlas;
         }
 
-        public EditorTile? selectedTile
+        public EditorTile selectedTile
         {
             get
             {
@@ -359,8 +359,8 @@ namespace BaldiLevelEditor
             writer.Close();
         }
 
-        private EditorLevel? tempLevel;
-        private Level? tempPlayLevel;
+        private EditorLevel tempLevel;
+        private Level tempPlayLevel;
 
         public void LoadLevelFromFile(string path)
         {
@@ -767,7 +767,7 @@ namespace BaldiLevelEditor
             selectedArea = null;
             selector.gameObject.SetActive(selectedTile != null);
             selector.transform.position = ByteVectorToWorld(new ByteVector2(selectorLocation.x,selectorLocation.z));
-            TiledArea? data = level.GetAreaOfPos(new ByteVector2(selectorLocation.x, selectorLocation.z));
+            TiledArea data = level.GetAreaOfPos(new ByteVector2(selectorLocation.x, selectorLocation.z));
             // todo: why the fuck is this here??? shouldn't state switching handle this?
             selector.arrows.Do(x =>
             {
@@ -840,7 +840,7 @@ namespace BaldiLevelEditor
             wallVisuals.Do(x => x.highlight = "none");
         }
 
-        public void SelectTool(EditorTool? tool)
+        public void SelectTool(EditorTool tool)
         {
             selector.gameObject.SetActive(true);
             selectedTool = tool;
@@ -1005,7 +1005,7 @@ namespace BaldiLevelEditor
                     }
                 }
             }
-            EditorTile? foundTile = null;
+            EditorTile foundTile = null;
             if (hit.transform.name.StartsWith("WallCollider"))
             {
                 foundTile = hit.transform.parent.parent.GetComponent<EditorTile>();

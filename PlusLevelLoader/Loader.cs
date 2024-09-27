@@ -148,6 +148,16 @@ namespace PlusLevelLoader
                     prefab = PlusLevelLoaderPlugin.Instance.tileAliases[level.tiledPrefabs[i].type]
                 });
             }
+            for (int i = 0; i < level.posters.Count; i++)
+            {
+                PosterLocation poster = level.posters[i];
+                asset.posters.Add(new PosterData()
+                {
+                    poster = PlusLevelLoaderPlugin.Instance.posters[poster.type],
+                    direction = poster.direction.ToStandard(),
+                    position = poster.position.ToInt()
+                });
+            }
             for (int i = 0; i < level.buttons.Count; i++)
             {
                 ButtonData buttonData = new ButtonData()

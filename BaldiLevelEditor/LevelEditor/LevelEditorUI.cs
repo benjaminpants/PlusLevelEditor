@@ -455,7 +455,7 @@ namespace BaldiLevelEditor
         }
 
         // do this so if saving/loading on a slow machine the game doesn't look like its crashing
-        IEnumerator RunThreadAndSpinGear(Action toPerform, Action? toPerformPostThread)
+        IEnumerator RunThreadAndSpinGear(Action toPerform, Action toPerformPostThread)
         {
             gearAnimator.SetDefaultAnimation("spin", 1f);
             Thread myThread = new Thread(new ThreadStart(toPerform));
@@ -475,7 +475,7 @@ namespace BaldiLevelEditor
             yield break;
         }
 
-        void CreateGearButton(Sprite sprite, Sprite highlightSprite, Vector2 position, Action toDo, bool thread, Action? postThread = null)
+        void CreateGearButton(Sprite sprite, Sprite highlightSprite, Vector2 position, Action toDo, bool thread, Action postThread = null)
         {
             Image but = UIHelpers.CreateImage(sprite, gearAnimator.transform, Vector3.zero, false);
             but.rectTransform.anchorMin = new Vector2(0f, 0f);

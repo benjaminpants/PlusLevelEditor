@@ -95,7 +95,7 @@ namespace PlusLevelFormat
             }
         }
 
-        public static void WriteActivity(this BinaryWriter writer, RoomActivity? activity)
+        public static void WriteActivity(this BinaryWriter writer, RoomActivity activity)
         {
             if (activity == null)
             {
@@ -114,7 +114,7 @@ namespace PlusLevelFormat
             writer.Write((byte)activity.direction);
         }
 
-        public static RoomActivity? ReadActivity(this BinaryReader reader)
+        public static RoomActivity ReadActivity(this BinaryReader reader)
         {
             string type = reader.ReadString();
             if (type == "null") return null;

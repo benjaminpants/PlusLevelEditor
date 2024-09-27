@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PlusLevelEditor\PlusLevelFormat.csproj" />
+    <ProjectReference Include="..\PlusLevelFormat\PlusLevelFormat.csproj" />
   </ItemGroup>
 
 </Project>

@@ -194,6 +194,7 @@ namespace PlusLevelFormat
         public List<ElevatorLocation> elevators = new List<ElevatorLocation>();
         public List<NPCLocation> npcSpawns = new List<NPCLocation>();
         public List<ButtonLocation> buttons = new List<ButtonLocation>();
+        public List<PosterLocation> posters = new List<PosterLocation>();
 
         protected Dictionary<ushort, ushort> _oldToNew = new Dictionary<ushort, ushort>(); //only here so RemoveRoom's local variable can be passed to whatever overrides it
 
@@ -217,15 +218,15 @@ namespace PlusLevelFormat
             Dictionary<RoomProperties, ushort> oldRoomIds = new Dictionary<RoomProperties, ushort>();
             Dictionary<RoomProperties, ushort> newRoomIds = new Dictionary<RoomProperties, ushort>();
             _oldToNew.Clear();
-            rooms.ForEach(room =>
+            rooms.ForEach(rm =>
             {
-                oldRoomIds.Add(room, (ushort)(rooms.IndexOf(room) + 1)); //roomIds start at 1, as 0 is reserved for no room/empty tile
+                oldRoomIds.Add(rm, (ushort)(rooms.IndexOf(room) + 1)); //roomIds start at 1, as 0 is reserved for no room/empty tile
             });
             ushort roomId = (ushort)(rooms.IndexOf(room) + 1);
             rooms.Remove(room);
-            rooms.ForEach(room =>
+            rooms.ForEach(rm =>
             {
-                newRoomIds.Add(room, (ushort)(rooms.IndexOf(room) + 1));
+                newRoomIds.Add(rm, (ushort)(rooms.IndexOf(room) + 1));
             });
             foreach (KeyValuePair<RoomProperties, ushort> kvp in oldRoomIds)
             {
@@ -314,11 +315,6 @@ namespace PlusLevelFormat
         {
             _x = (byte)x;
             _y = (byte)y;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(_x, _y);
         }
 
         public static ByteVector2 one => new ByteVector2(1, 1);

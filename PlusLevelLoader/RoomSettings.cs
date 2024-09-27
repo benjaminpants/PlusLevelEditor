@@ -12,9 +12,9 @@ namespace PlusLevelLoader
         public UnityEngine.Color color = Color.white;
         public Material mapMaterial;
         public StandardDoorMats doorMat;
-        public RoomFunctionContainer? container;
+        public RoomFunctionContainer container;
 
-        public RoomSettings(RoomCategory cat, RoomType type, Color color, StandardDoorMats doors, Material? mapMaterial = null) 
+        public RoomSettings(RoomCategory cat, RoomType type, Color color, StandardDoorMats doors, Material mapMaterial = null) 
         {
             category = cat;
             this.type = type;

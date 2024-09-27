@@ -34,13 +34,13 @@ namespace BaldiLevelEditor
             newLoca.direction = direction;
             for (int i = 0; i < connectedPrefabs.Count; i++)
             {
-                ConnectionData? data = ConnectionData.FromPrefab(level, connectedPrefabs[i]);
+                ConnectionData data = ConnectionData.FromPrefab(level, connectedPrefabs[i]);
                 if (data == null) continue;
                 newLoca.connections.Add(data);
             }
             for (int i = 0; i < connectedTiles.Count; i++)
             {
-                ConnectionData? data = ConnectionData.FromTileBased(level, connectedTiles[i]);
+                ConnectionData data = ConnectionData.FromTileBased(level, connectedTiles[i]);
                 if (data == null) continue;
                 newLoca.connections.Add(data);
             }
@@ -310,7 +310,7 @@ namespace BaldiLevelEditor
             }
         }
 
-        public PlusLevelFormat.Tile? GetTileSafe(int x, int y)
+        public PlusLevelFormat.Tile GetTileSafe(int x, int y)
         {
             if (x < 0) return null;
             if (x >= width) return null;
@@ -366,12 +366,12 @@ namespace BaldiLevelEditor
             List<DoorLocation> doorsToRemove = new List<DoorLocation>();
             for (int i = 0; i < doors.Count; i++)
             {
-                PlusLevelFormat.Tile? t = GetTileSafe(doors[i].position.x, doors[i].position.y);
+                PlusLevelFormat.Tile t = GetTileSafe(doors[i].position.x, doors[i].position.y);
                 if (t == null) throw new Exception("DOOR OOB!");
                 if (t.roomId == 0) { doorsToRemove.Add(doors[i]); continue; }
                 doors[i].roomId = t.roomId;
                 IntVector2 vec2 = doors[i].direction.ToStandard().ToIntVector2();
-                PlusLevelFormat.Tile? tAhead = GetTileSafe(doors[i].position.x + vec2.x, doors[i].position.y + vec2.z);
+                PlusLevelFormat.Tile tAhead = GetTileSafe(doors[i].position.x + vec2.x, doors[i].position.y + vec2.z);
                 if (tAhead == null) { doorsToRemove.Add(doors[i]); continue; }
                 if (tAhead.roomId == 0) { doorsToRemove.Add(doors[i]); continue; }
                 if ((rooms[tAhead.roomId - 1].type != "hall") && PlusLevelEditor.DoorShouldPrioritizeRooms(doors[i].type))
@@ -387,12 +387,12 @@ namespace BaldiLevelEditor
             List<T> toRemove = new List<T>();
             for (int i = 0; i < list.Count; i++)
             {
-                PlusLevelFormat.Tile? t = GetTileSafe(list[i].position.x, list[i].position.y);
+                PlusLevelFormat.Tile t = GetTileSafe(list[i].position.x, list[i].position.y);
                 if (t == null) throw new Exception("TILED OBJECT OOB!");
                 if (t.roomId == 0) { toRemove.Add(list[i]); continue; }
                 if (!careAboutMissingWall) continue; // we dont care about if the wall outside exists(aka for buttons) so it can go BYE BYE!
                 IntVector2 vec2 = list[i].direction.ToStandard().ToIntVector2();
-                PlusLevelFormat.Tile? tAhead = GetTileSafe(list[i].position.x + vec2.x, list[i].position.y + vec2.z);
+                PlusLevelFormat.Tile tAhead = GetTileSafe(list[i].position.x + vec2.x, list[i].position.y + vec2.z);
                 if (tAhead == null) { toRemove.Add(list[i]); continue; }
                 if (tAhead.roomId == 0) { toRemove.Add(list[i]); continue; }
             }
@@ -420,7 +420,7 @@ namespace BaldiLevelEditor
                         Direction dir = allDirections[0];
                         allDirections.RemoveAt(0);
                         IntVector2 vec2 = dir.ToIntVector2();
-                        PlusLevelFormat.Tile? nearbyTile = GetTileSafe(t.position.x + vec2.x, t.position.y + vec2.z);
+                        PlusLevelFormat.Tile nearbyTile = GetTileSafe(t.position.x + vec2.x, t.position.y + vec2.z);
                         bool wallFacingThisWay = (nearbyTile == null) ? true : (nearbyTile.roomId != t.roomId);
                         if (wallFacingThisWay)
                         {
@@ -564,7 +564,7 @@ namespace BaldiLevelEditor
             return false;
         }
 
-        public TiledArea? GetAreaOfPos(ByteVector2 vector)
+        public TiledArea GetAreaOfPos(ByteVector2 vector)
         {
             foreach (TiledArea area in areas)
             {

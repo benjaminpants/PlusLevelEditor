@@ -13,14 +13,14 @@ namespace BaldiLevelEditor
 {
     public interface ITileVisual
     {
-        public ByteVector2 position { get; }
-        public Direction direction { get; }
-        public TiledPrefab prefab { set; get; }
-        public GameObject gameObject { get; }
-        public Transform transform { get; }
-        public string highlight { get; set; }
-        public void DestroyObject(EditorLevel level);
-        public bool DoesExist(EditorLevel level);
+        ByteVector2 position { get; }
+        Direction direction { get; }
+        TiledPrefab prefab { set; get; }
+        GameObject gameObject { get; }
+        Transform transform { get; }
+        string highlight { get; set; }
+        void DestroyObject(EditorLevel level);
+        bool DoesExist(EditorLevel level);
     }
 
     // THIS IS SO FUCKING UGLY PLEASE END ME
@@ -89,11 +89,11 @@ namespace BaldiLevelEditor
 
     public interface IWallVisual
     {
-        public abstract void SetupMaterials(MeshRenderer renderer, bool outside);
-        public abstract string highlight { get; set; }
-        public abstract GameObject gameObject { get; }
-        public abstract bool ShouldBeDestroyed(EditorLevel level);
-        public abstract TiledPrefab prefab { get; set; }
+        void SetupMaterials(MeshRenderer renderer, bool outside);
+        string highlight { get; set; }
+        GameObject gameObject { get; }
+        bool ShouldBeDestroyed(EditorLevel level);
+        TiledPrefab prefab { get; set; }
     }
 
     public abstract class WallEditorVisual<T> : TileBasedEditorVisual<T>, IWallVisual where T : TiledPrefab
@@ -246,7 +246,7 @@ namespace BaldiLevelEditor
 
     public class ButtonEditorVisual : WallEditorVisual<EditorButtonPlacement>
     {
-        private MeshRenderer? hackRenderer;
+        private MeshRenderer hackRenderer;
         public override string objectName => "ButtonVisual";
 
         public override string highlight 
