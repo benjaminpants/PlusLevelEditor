@@ -247,6 +247,11 @@ namespace PlusLevelFormat
                     _oldToNew.Add(kvp.Value, 0);
                     continue;
                 }
+                if (_oldToNew.ContainsKey(kvp.Value))
+                {
+                    // what the fuck? this didnt occur in net 2.1, what changed?
+                    continue;
+                }
                 _oldToNew.Add(kvp.Value, newRoomIds[kvp.Key]);
             }
             for (int x = 0; x < width; x++)
