@@ -933,7 +933,7 @@ namespace BaldiLevelEditor
         {
             if (_isSpawn)
             {
-                if (Singleton<PlusLevelEditor>.Instance.level.elevators.Where(x => x.isSpawn).Count() > 0)
+                if (Singleton<PlusLevelEditor>.Instance.level.exits.Where(x => x.isSpawn).Count() > 0)
                 {
                     return false;
                 }

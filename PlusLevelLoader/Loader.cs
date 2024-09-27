@@ -181,15 +181,15 @@ namespace PlusLevelLoader
 
             asset.spawnDirection = Direction.North;
             asset.spawnPoint = new Vector3(0f, 5f, 0f);
-            for (int i = 0; i < level.elevators.Count; i++)
+            for (int i = 0; i < level.exits.Count; i++)
             {
                 asset.exits.Add(new ExitData()
                 {
-                    direction = level.elevators[i].direction.ToStandard(),
-                    position = level.elevators[i].position.ToInt(),
-                    spawn = level.elevators[i].isSpawn,
+                    direction = level.exits[i].direction.ToStandard(),
+                    position = level.exits[i].position.ToInt(),
+                    spawn = level.exits[i].isSpawn,
                     room = RoomAssetMetaStorage.Instance.Get("Room_Elevator").value,
-                    prefab = PlusLevelLoaderPlugin.Instance.assetMan.Get<Elevator>("ElevatorPrefab")
+                    prefab = PlusLevelLoaderPlugin.Instance.elevators[level.exits[i].type]
                 });
             }
             asset.tbos.AddRange(appendAtEnd);

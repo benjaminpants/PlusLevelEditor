@@ -141,16 +141,25 @@ namespace PlusLevelFormat
             return activity;
         }
 
-        public static void Write(this BinaryWriter writer, ElevatorLocation elevator)
+        public static void Write(this BinaryWriter writer, ExitLocation elevator)
         {
+            writer.Write(elevator.type);
             writer.Write(elevator.position);
             writer.Write((byte)elevator.direction);
             writer.Write(elevator.isSpawn);
         }
 
-        public static ElevatorLocation ReadElevator(this BinaryReader reader)
+        public static ExitLocation ReadExit(this BinaryReader reader, int version)
         {
-            ElevatorLocation elevator = new ElevatorLocation();
+            ExitLocation elevator = new ExitLocation();
+            if (version <= 5)
+            {
+                elevator.type = "elevator";
+            }
+            else
+            {
+                elevator.type = reader.ReadString();
+            }
             elevator.position = reader.ReadByteVector2();
             elevator.direction = (PlusDirection)reader.ReadByte();
             elevator.isSpawn = reader.ReadBoolean();

@@ -45,6 +45,7 @@ namespace PlusLevelLoader
         public Dictionary<string, ItemObject> itemObjects = new Dictionary<string, ItemObject>();
         public Dictionary<string, GameButtonBase> buttons = new Dictionary<string, GameButtonBase>(); //rest in pieces lever...
         public Dictionary<string, PosterObject> posters = new Dictionary<string, PosterObject>();
+        public Dictionary<string, Elevator> elevators = new Dictionary<string, Elevator>();
 
         /*void OptMenPlaceholder(OptionsMenu __instance)
         {
@@ -218,6 +219,7 @@ namespace PlusLevelLoader
                 }
             });
             buttons.Add("button", assetMan.Get<GameButtonBase>("GameButton"));
+            elevators.Add("elevator", PlusLevelLoaderPlugin.Instance.assetMan.Get<Elevator>("ElevatorPrefab"));
             yield break;
         }
 

@@ -79,8 +79,9 @@ namespace PlusLevelFormat
         public UnityVector3 position { get; set; }
     }
 
-    public class ElevatorLocation
+    public class ExitLocation
     {
+        public string type = "elevator";
         public ByteVector2 position;
         public PlusDirection direction;
         public bool isSpawn = false;

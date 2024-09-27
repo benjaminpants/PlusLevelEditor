@@ -46,10 +46,10 @@ namespace PlusLevelFormat
             {
                 writer.Write(level.windows[i]);
             }
-            writer.Write(level.elevators.Count);
-            for (int i = 0; i < level.elevators.Count; i++)
+            writer.Write(level.exits.Count);
+            for (int i = 0; i < level.exits.Count; i++)
             {
-                writer.Write(level.elevators[i]);
+                writer.Write(level.exits[i]);
             }
             writer.Write(level.npcSpawns.Count);
             for (int i = 0; i < level.npcSpawns.Count; i++)
@@ -135,7 +135,7 @@ namespace PlusLevelFormat
             int elevatorCount = reader.ReadInt32();
             for (int i = 0; i < elevatorCount; i++)
             {
-                newLevel.elevators.Add(reader.ReadElevator());
+                newLevel.exits.Add(reader.ReadExit(version));
             }
             int npcCount = reader.ReadInt32();
             for (int i = 0; i < npcCount; i++)
@@ -192,7 +192,7 @@ namespace PlusLevelFormat
 
     public class Level
     {
-        public const byte version = 5;
+        public const byte version = 6;
         public Tile[,] tiles = new Tile[1,1];
         public bool[,] entitySafeTiles = new bool[1, 1];
         public bool[,] eventSafeTiles = new bool[1, 1];
@@ -203,7 +203,7 @@ namespace PlusLevelFormat
         public List<TiledPrefab> tiledPrefabs = new List<TiledPrefab>();
         public List<DoorLocation> doors = new List<DoorLocation>();
         public List<WindowLocation> windows = new List<WindowLocation>();
-        public List<ElevatorLocation> elevators = new List<ElevatorLocation>();
+        public List<ExitLocation> exits = new List<ExitLocation>();
         public List<NPCLocation> npcSpawns = new List<NPCLocation>();
         public List<ButtonLocation> buttons = new List<ButtonLocation>();
         public List<PosterLocation> posters = new List<PosterLocation>();

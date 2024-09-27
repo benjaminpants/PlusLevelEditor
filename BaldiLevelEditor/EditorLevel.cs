@@ -76,7 +76,7 @@ namespace BaldiLevelEditor
         public List<PrefabLocation> prefabs = new List<PrefabLocation>();
         public List<ItemLocation> items = new List<ItemLocation>();
         private RoomProperties _hallRoom;
-        public Dictionary<ElevatorArea, ElevatorLocation> elevatorAreas = new Dictionary<ElevatorArea, ElevatorLocation>();
+        public Dictionary<ElevatorArea, ExitLocation> elevatorAreas = new Dictionary<ElevatorArea, ExitLocation>();
         public RoomProperties hallRoom => _hallRoom;
         public EditorLevel(byte width, byte height) : base(width, height)
         {
@@ -166,10 +166,10 @@ namespace BaldiLevelEditor
             int elevatorCount = reader.ReadInt32();
             for (int i = 0; i < elevatorCount; i++)
             {
-                ElevatorLocation location = reader.ReadElevator();
+                ExitLocation location = reader.ReadExit(version <= 1 ? 5 : 6);
                 ElevatorArea area = new ElevatorArea(location.position, 1, location.direction.ToStandard());
                 level.areas.Add(area);
-                level.elevators.Add(location);
+                level.exits.Add(location);
                 level.elevatorAreas.Add(area,location);
             }
             int npcCount = reader.ReadInt32();
@@ -217,12 +217,12 @@ namespace BaldiLevelEditor
 
         public void AddElevator(ElevatorArea area, bool isSpawn)
         {
-            ElevatorLocation location = new ElevatorLocation() { direction = area.direction.ToData(), isSpawn = isSpawn, position = area.origin };
-            elevators.Add(location);
+            ExitLocation location = new ExitLocation() { direction = area.direction.ToData(), isSpawn = isSpawn, position = area.origin, type = "elevator" };
+            exits.Add(location);
             elevatorAreas.Add(area, location);
         }
 
-        public const byte editorFormatVersion = 1;
+        public const byte editorFormatVersion = 2;
 
         public void SaveIntoStream(BinaryWriter writer)
         {
@@ -268,10 +268,10 @@ namespace BaldiLevelEditor
             {
                 writer.Write(prefabs[i]);
             }
-            writer.Write(elevators.Count);
-            for (int i = 0; i < elevators.Count; i++)
+            writer.Write(exits.Count);
+            for (int i = 0; i < exits.Count; i++)
             {
-                writer.Write(elevators[i]);
+                writer.Write(exits[i]);
             }
             writer.Write(npcSpawns.Count);
             for (int i = 0; i < npcSpawns.Count; i++)
@@ -506,7 +506,7 @@ namespace BaldiLevelEditor
                 if (!areas.Contains(x.Key))
                 {
                     toRemove.Add(x.Key);
-                    elevators.Remove(x.Value);
+                    exits.Remove(x.Value);
                 }
             });
             foreach (ElevatorArea rea in elevatorsToRemove)
