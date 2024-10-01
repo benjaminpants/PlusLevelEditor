@@ -166,6 +166,27 @@ namespace PlusLevelFormat
             return elevator;
         }
 
+        public static void Write(this BinaryWriter writer, LightLocation light)
+        {
+            writer.Write(light.type);
+            writer.Write(light.position);
+            writer.Write(light.color.r);
+            writer.Write(light.color.g);
+            writer.Write(light.color.b);
+            writer.Write(light.color.a);
+            writer.Write(light.strength);
+        }
+
+        public static LightLocation ReadLight(this BinaryReader reader)
+        {
+            LightLocation newL = new LightLocation();
+            newL.type = reader.ReadString();
+            newL.position = reader.ReadByteVector2();
+            newL.color = new UnityColor(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            newL.strength = reader.ReadByte();
+            return newL;
+        }
+
         public static RoomProperties ReadRoom(this BinaryReader reader)
         {
             RoomProperties room = new RoomProperties(reader.ReadString());

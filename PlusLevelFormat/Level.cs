@@ -102,6 +102,17 @@ namespace PlusLevelFormat
             {
                 writer.Write(level.posters[i]);
             }
+            // write lights
+            writer.Write(level.minLightColor.r);
+            writer.Write(level.minLightColor.g);
+            writer.Write(level.minLightColor.b);
+            writer.Write(level.minLightColor.a);
+            writer.Write((byte)level.lightMode);
+            writer.Write(level.lights.Count);
+            for (int i = 0; i < level.lights.Count; i++)
+            {
+                writer.Write(level.lights[i]);
+            }
         }
 
         public static Level ReadLevel(this BinaryReader reader)
@@ -186,13 +197,24 @@ namespace PlusLevelFormat
             {
                 newLevel.posters.Add(reader.ReadPoster());
             }
+            if (version <= 6) return newLevel;
+            newLevel.minLightColor.r = reader.ReadSingle();
+            newLevel.minLightColor.g = reader.ReadSingle();
+            newLevel.minLightColor.b = reader.ReadSingle();
+            newLevel.minLightColor.a = reader.ReadSingle();
+            newLevel.lightMode = (BaldiLightMode)reader.ReadByte();
+            int lightCount = reader.ReadInt32();
+            for (int i = 0; i < lightCount; i++)
+            {
+                newLevel.lights.Add(reader.ReadLight());
+            }
             return newLevel;
         }
     }
 
     public class Level
     {
-        public const byte version = 6;
+        public const byte version = 7;
         public Tile[,] tiles = new Tile[1,1];
         public bool[,] entitySafeTiles = new bool[1, 1];
         public bool[,] eventSafeTiles = new bool[1, 1];
@@ -207,6 +229,10 @@ namespace PlusLevelFormat
         public List<NPCLocation> npcSpawns = new List<NPCLocation>();
         public List<ButtonLocation> buttons = new List<ButtonLocation>();
         public List<PosterLocation> posters = new List<PosterLocation>();
+        public List<LightLocation> lights = new List<LightLocation>();
+
+        public BaldiLightMode lightMode = BaldiLightMode.Cumulative;
+        public UnityColor minLightColor = new UnityColor(1f,1f,1f);
 
         protected Dictionary<ushort, ushort> _oldToNew = new Dictionary<ushort, ushort>(); //only here so RemoveRoom's local variable can be passed to whatever overrides it
 
@@ -300,7 +326,12 @@ namespace PlusLevelFormat
             }
         }
     }
-
+    public enum BaldiLightMode : byte
+    {
+        Additive,
+        Greatest,
+        Cumulative
+    }
     public class Tile
     {
 

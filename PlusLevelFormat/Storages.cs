@@ -73,6 +73,14 @@ namespace PlusLevelFormat
         }
     }
 
+    public class LightLocation
+    {
+        public string type = "fluorescent";
+        public ByteVector2 position;
+        public UnityColor color;
+        public byte strength;
+    }
+
     public class ItemLocation : IEditorLocation
     {
         public string item = "null";

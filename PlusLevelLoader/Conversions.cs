@@ -6,6 +6,16 @@ namespace PlusLevelLoader
 {
     public static class Extensions
     {
+        public static Color ToStandard(this UnityColor color)
+        {
+            return new Color(color.r,color.g,color.b,color.a);
+        }
+
+        public static UnityColor ToData(this Color color)
+        {
+            return new UnityColor(color.r,color.g,color.b,color.a);
+        }
+
         public static Direction ToStandard(this PlusDirection direction)
         {
             return (Direction)direction;

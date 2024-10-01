@@ -151,6 +151,11 @@ namespace PlusLevelLoader
             for (int i = 0; i < level.posters.Count; i++)
             {
                 PosterLocation poster = level.posters[i];
+                if (!PlusLevelLoaderPlugin.Instance.posters.ContainsKey(poster.type))
+                {
+                    Debug.LogWarning("Unknown poster: " + poster.type);
+                    continue;
+                }
                 asset.posters.Add(new PosterData()
                 {
                     poster = PlusLevelLoaderPlugin.Instance.posters[poster.type],
@@ -192,6 +197,19 @@ namespace PlusLevelLoader
                     prefab = PlusLevelLoaderPlugin.Instance.elevators[level.exits[i].type]
                 });
             }
+
+            // add lights
+            for (int i = 0; i < level.lights.Count; i++)
+            {
+                asset.lights.Add(new LightSourceData()
+                {
+                    color = level.lights[i].color.ToStandard(),
+                    strength = level.lights[i].strength,
+                    position = level.lights[i].position.ToInt(),
+                    prefab = PlusLevelLoaderPlugin.Instance.lightAliases[level.lights[i].type]
+                });
+            }
+
             asset.tbos.AddRange(appendAtEnd);
             return asset;
         }
@@ -206,6 +224,9 @@ namespace PlusLevelLoader
                 scene.extraAsset.npcSpawnPoints.Add(level.npcSpawns[i].position.ToInt());
                 scene.extraAsset.npcsToSpawn.Add(PlusLevelLoaderPlugin.Instance.npcAliases[level.npcSpawns[i].type]);
             }
+
+            scene.extraAsset.lightMode = (LightMode)level.lightMode;
+            scene.extraAsset.minLightColor = level.minLightColor.ToStandard();
             return scene;
         }
     }

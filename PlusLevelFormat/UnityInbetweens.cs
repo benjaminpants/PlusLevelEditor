@@ -18,6 +18,30 @@ namespace PlusLevelFormat
         }
     }
 
+    public struct UnityColor
+    {
+        public float r;
+        public float g;
+        public float b;
+        public float a;
+
+        public UnityColor(float r, float g, float b, float a)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
+        }
+
+        public UnityColor(float r, float g, float b)
+        {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = 1f;
+        }
+    }
+
     public struct UnityQuaternion 
     {
         public float x;
