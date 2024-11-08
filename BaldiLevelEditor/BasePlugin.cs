@@ -108,16 +108,6 @@ namespace BaldiLevelEditor
             return comp;
         }
 
-        void OptMenPlaceholder(OptionsMenu __instance)
-        {
-            GameObject obj = CustomOptionsCore.CreateNewCategory(__instance, "EDITOR");
-            StandardMenuButton but = CustomOptionsCore.CreateApplyButton(__instance, "WARP TO EDITOR!!", () =>
-            {
-                BaldiLevelEditorPlugin.Instance.StartCoroutine(BaldiLevelEditorPlugin.Instance.GoToGame());
-            });
-            but.transform.SetParent(obj.transform, false);
-        }
-
         public IEnumerator GoToGame()
         {
             AsyncOperation waitForSceneLoad = SceneManager.LoadSceneAsync("Game");
@@ -259,6 +249,8 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("payphone", objects.Where(x => x.name == "PayPhone").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("tapeplayer", objects.Where(x => x.name == "TapePlayer").Where(x => x.transform.parent == null).First(), Vector3.up * 5f));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("plant", objects.Where(x => x.name == "Plant").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("picnictable", objects.Where(x => x.name == "PicnicTable").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("tent", objects.Where(x => x.name == "Tent_Object").Where(x => x.transform.parent == null).First(), Vector3.zero));
 
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_pencilnotes", objects.Where(x => x.name == "Decor_PencilNotes").Where(x => x.transform.parent == null).First(), Vector3.up * 3.75f));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_papers", objects.Where(x => x.name == "Decor_Papers").Where(x => x.transform.parent == null).First(), Vector3.up * 3.75f));
@@ -267,6 +259,7 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_lunch", objects.Where(x => x.name == "Decor_Lunch").Where(x => x.transform.parent == null).First(), Vector3.up * 3.75f));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_banana", objects.Where(x => x.name == "Decor_Banana").Where(x => x.transform.parent == null).First(), Vector3.up * 3.75f));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_zoneflag", objects.Where(x => x.name == "Decor_ZoningFlag").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First(), Vector3.zero));
             //editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("hopscotch", );
 
             //objects.Where(x => x.name == "PlaygroundPavement").Where(x => x.transform.parent == null).First().transform.GetChild(0);
@@ -343,6 +336,7 @@ namespace BaldiLevelEditor
             itemObjects.Add("points25", ItemMetaStorage.Instance.GetPointsObject(25, true));
             itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
             itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
+            itemObjects.Add("buspass", ItemMetaStorage.Instance.FindByEnum(Items.BusPass).value);
 
             yield return "Setting Up Tiled Editor Prefabs...";
             // tile based objects

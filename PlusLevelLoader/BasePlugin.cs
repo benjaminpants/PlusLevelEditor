@@ -166,6 +166,9 @@ namespace PlusLevelLoader
             prefabAliases.Add("decor_zoneflag", objects.Where(x => x.name == "Decor_ZoningFlag").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("hopscotch", objects.Where(x => x.name == "PlaygroundPavement").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("chairsanddesk", objects.Where(x => x.name == "Chairs_Desk_Perfect").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("picnictable", objects.Where(x => x.name == "PicnicTable").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("tent", objects.Where(x => x.name == "Tent_Object").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First());
 
             TileBasedObject[] tiledObjects = Resources.FindObjectsOfTypeAll<TileBasedObject>();
 
@@ -212,6 +215,7 @@ namespace PlusLevelLoader
             itemObjects.Add("points25", ItemMetaStorage.Instance.GetPointsObject(25, true));
             itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
             itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
+            itemObjects.Add("buspass", ItemMetaStorage.Instance.FindByEnum(Items.BusPass).value);
             Resources.FindObjectsOfTypeAll<PosterObject>().Do(x =>
             {
                 if (x.GetInstanceID() >= 0)
