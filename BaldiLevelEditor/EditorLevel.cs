@@ -345,6 +345,7 @@ namespace BaldiLevelEditor
 
         public void SetWall(ByteVector2 position, Direction dir, bool state, bool oneSide = false)
         {
+            if (GetTileSafe(position.x, position.y) == null) return; // todo: figure out better solution, this is necessary to stop buttons at edges from crashing the editor.
             IntVector2 forward = Directions.ToIntVector2(dir);
             if (!state)
             {
