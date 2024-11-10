@@ -246,8 +246,6 @@ namespace PlusLevelFormat
             return (ushort)rooms.Count;
         }
 
-        // TODO: ROOM DELETING IS COMPELTELY FUCKING BROKEN. FIXXXXX
-
         /// <summary>
         /// Returns the roomID of the room that was removed.
         /// </summary>
