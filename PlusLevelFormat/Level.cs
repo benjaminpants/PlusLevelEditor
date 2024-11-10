@@ -260,25 +260,19 @@ namespace PlusLevelFormat
             _oldToNew.Clear();
             rooms.ForEach(rm =>
             {
-                oldRoomIds.Add(rm, (ushort)(rooms.IndexOf(room) + 1)); //roomIds start at 1, as 0 is reserved for no room/empty tile
+                oldRoomIds.Add(rm, (ushort)(rooms.IndexOf(rm) + 1)); //roomIds start at 1, as 0 is reserved for no room/empty tile
             });
             ushort roomId = (ushort)(rooms.IndexOf(room) + 1);
             rooms.Remove(room);
             rooms.ForEach(rm =>
             {
-                newRoomIds.Add(rm, (ushort)(rooms.IndexOf(room) + 1));
+                newRoomIds.Add(rm, (ushort)(rooms.IndexOf(rm) + 1));
             });
             foreach (KeyValuePair<RoomProperties, ushort> kvp in oldRoomIds)
             {
                 if (kvp.Key == room)
                 {
                     _oldToNew.Add(kvp.Value, 0);
-                    continue;
-                }
-                if (_oldToNew.ContainsKey(kvp.Value))
-                {
-                    // what the fuck? this didnt occur in net 2.1, what changed?
-                    // (specifically it always occurs with 0, todo: investigate?)
                     continue;
                 }
                 _oldToNew.Add(kvp.Value, newRoomIds[kvp.Key]);
