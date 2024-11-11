@@ -74,12 +74,18 @@ namespace BaldiLevelEditor
                         prefabRotations[0].SetActive(true);
                         break;
                     case SelectorType.ItemSelectDirection:
-                    case SelectorType.Tile:
                         List<Direction> directions = Directions.All();
                         for (int i = 0; i < directions.Count; i++)
                         {
                             arrows[i].transform.localPosition = Vector3.up * 0.25f;
                             arrows[i].transform.localPosition += directions[i].ToVector3() * 10f;
+                        }
+                        break;
+                    case SelectorType.Tile:
+                        main.SetActive(true);
+                        for (int i = 0; i < arrows.Length; i++)
+                        {
+                            arrows[i].SetActive(false);
                         }
                         break;
                     case SelectorType.PrefabSelect:

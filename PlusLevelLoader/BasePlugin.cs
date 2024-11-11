@@ -169,6 +169,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("picnictable", objects.Where(x => x.name == "PicnicTable").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("tent", objects.Where(x => x.name == "Tent_Object").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("picnicbasket", objects.Where(x => x.name == "PicnicBasket").Where(x => x.transform.parent == null).First());
 
             TileBasedObject[] tiledObjects = Resources.FindObjectsOfTypeAll<TileBasedObject>();
 

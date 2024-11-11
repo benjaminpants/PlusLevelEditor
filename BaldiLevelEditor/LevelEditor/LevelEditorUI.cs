@@ -181,7 +181,7 @@ namespace BaldiLevelEditor
 
         public List<ToolCategory> toolCats = new List<ToolCategory>()
         {
-            new ToolCategory("halls", GetUISprite("Floor"),
+            new ToolCategory("halls", GetUISprite("cat_floor"),
             new FloorTool("hall"),
             new FloorTool("class"),
             new FloorTool("faculty"),
@@ -265,6 +265,7 @@ namespace BaldiLevelEditor
             new ObjectTool("bananatree"),
             new ObjectTool("pinetree"),
             new ObjectTool("picnictable"),
+            new ObjectTool("picnicbasket"),
             new ObjectTool("tent"),
             new ObjectTool("rock"),
             new ObjectTool("hopscotch"),
@@ -552,7 +553,20 @@ namespace BaldiLevelEditor
             Image slot = UIHelpers.CreateImage(GetUISprite("SlotStandard"), parent, new Vector2(0f,0f), false);
             slot.transform.SetParent(parent, false);
             slot.name = "Tool Slot (" + tool.GetType().Name + ")";
-            Image icon = UIHelpers.CreateImage(tool.editorSprite, slot.transform, new Vector2(0f, 0f), false);
+            Sprite targetSprite = null;
+            try
+            {
+                targetSprite = tool.editorSprite;
+            }
+            catch(Exception E)
+            {
+                UnityEngine.Debug.LogException(E);
+            }
+            if (targetSprite == null)
+            {
+                targetSprite = BaldiLevelEditorPlugin.Instance.assetMan.Get<Sprite>("UI/icon_unknown");
+            }
+            Image icon = UIHelpers.CreateImage(targetSprite, slot.transform, new Vector2(0f, 0f), false);
             slot.transform.SetParent(slot.transform, false);
             icon.name = "Icon";
             StandardMenuButton button = icon.gameObject.ConvertToButton<StandardMenuButton>(true);

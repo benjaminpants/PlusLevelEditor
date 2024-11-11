@@ -89,7 +89,10 @@ namespace BaldiLevelEditor
             bool active = reference.activeSelf;
             reference.SetActive(false);
             GameObject obj = GameObject.Instantiate(reference);
-            obj.GetComponentsInChildren<MonoBehaviour>().Do(x => Destroy(x));
+            obj.GetComponentsInChildren<MonoBehaviour>().Do(x => {
+                if (x is BillboardUpdater) return;
+                Destroy(x);
+            });
             if (stripColliders)
             {
                 obj.GetComponentsInChildren<Collider>().Do(x => Destroy(x));
@@ -151,6 +154,7 @@ namespace BaldiLevelEditor
             dummyObject.SetActive(false);
             PlusLevelEditor editor = dummyObject.AddComponent<PlusLevelEditor>();
             editor.ReflectionSetVariable("destroyOnLoad", true);
+            editor.gameObject.AddComponent<BillboardManager>();
             dummyObject.SetActive(true);
             editor.gameObject.name = "Level Editor";
             editor.cursorBounds = cursorInit.screenSize;
@@ -260,6 +264,7 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_banana", objects.Where(x => x.name == "Decor_Banana").Where(x => x.transform.parent == null).First(), Vector3.up * 3.75f));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_zoneflag", objects.Where(x => x.name == "Decor_ZoningFlag").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("picnicbasket", objects.Where(x => x.name == "PicnicBasket").Where(x => x.transform.parent == null).First(), Vector3.zero));
             //editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("hopscotch", );
 
             //objects.Where(x => x.name == "PlaygroundPavement").Where(x => x.transform.parent == null).First().transform.GetChild(0);
@@ -424,7 +429,7 @@ namespace BaldiLevelEditor
             assetMan.Add<Sprite>("EditorButtonGlow", AssetLoader.SpriteFromTexture2D(AssetLoader.TextureFromMod(this, "EditorButton_Glow.png"), 1f));
             assetMan.Add<Sprite>("EditorButtonFail", AssetLoader.SpriteFromTexture2D(AssetLoader.TextureFromMod(this, "EditorButtonFail.png"), 1f));
             assetMan.Add<Sprite>("LinkSprite", AssetLoader.SpriteFromTexture2D(AssetLoader.TextureFromMod(this, "LinkSprite.png"), 40f));
-            doorTypes.Add("standard", typeof(DoorEditorVisual));
+            doorTypes.Add("standard", typeof(StandardDoorEditorVisual));
             doorTypes.Add("swing", typeof(SwingEditorVisual));
             doorTypes.Add("autodoor", typeof(AutoDoorEditorVisual));
             doorTypes.Add("swingsilent", typeof(SilentSwingEditorVisual));

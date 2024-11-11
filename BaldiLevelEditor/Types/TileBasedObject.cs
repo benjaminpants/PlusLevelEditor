@@ -244,6 +244,23 @@ namespace BaldiLevelEditor
         }
     }
 
+    public class StandardDoorEditorVisual : DoorEditorVisual
+    {
+        public override string objectName => "Door";
+
+        public override void SetupMaterials(MeshRenderer renderer, bool outside)
+        {
+            base.SetupMaterials(renderer, outside);
+            ByteVector2 positionToGet = position;
+            if (!outside)
+            {
+                positionToGet += direction.ToIntVector2().ToByte();
+            }
+            RoomProperties prop = Singleton<PlusLevelEditor>.Instance.level.rooms[Mathf.Max(Singleton<PlusLevelEditor>.Instance.level.GetRoomIDOfPos(positionToGet, true) - 1, 0)];
+            renderer.materials[1].SetMainTexture(PlusLevelLoaderPlugin.Instance.roomSettings[prop.type].doorMat.shut.GetTexture("_MainTex"));
+        }
+    }
+
     public class ButtonEditorVisual : WallEditorVisual<EditorButtonPlacement>
     {
         private MeshRenderer hackRenderer;
