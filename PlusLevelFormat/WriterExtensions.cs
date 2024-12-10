@@ -42,7 +42,6 @@ namespace PlusLevelFormat
 
         public static void Write(this BinaryWriter writer, ButtonLocation button)
         {
-            writer.Write(button.type);
             writer.Write(button.position);
             writer.Write((byte)button.direction);
             writer.Write(button.connections.Count);
@@ -52,10 +51,31 @@ namespace PlusLevelFormat
             }
         }
 
-        public static ButtonLocation ReadButton(this BinaryReader reader)
+        public static void Write(this BinaryWriter writer, StructureLocation location)
+        {
+            writer.Write((TiledPrefab)location);
+            writer.Write(location.data);
+            writer.Write(location.prefab);
+        }
+
+        public static StructureLocation ReadStructure(this BinaryReader reader)
+        {
+            StructureLocation loc = new StructureLocation();
+            loc.type = reader.ReadString();
+            loc.position = reader.ReadByteVector2();
+            loc.direction = (PlusDirection)reader.ReadByte();
+            loc.data = reader.ReadInt32();
+            loc.prefab = reader.ReadString();
+            return loc;
+        }
+
+        public static ButtonLocation ReadButton(this BinaryReader reader, byte version)
         {
             ButtonLocation button = new ButtonLocation();
-            button.type = reader.ReadString();
+            if (version < 8)
+            {
+                button.type = reader.ReadString();
+            }
             button.position = reader.ReadByteVector2();
             button.direction = (PlusDirection)reader.ReadByte();
             int count = reader.ReadInt32();

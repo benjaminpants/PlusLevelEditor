@@ -82,6 +82,27 @@ namespace BaldiLevelEditor
         }
     }
 
+    public class DisabledEditorTool : EditorTool
+    {
+        public string _sprite;
+        public override Sprite editorSprite => BaldiLevelEditorPlugin.Instance.assetMan.Get<Sprite>("UI/" + _sprite);
+
+        public DisabledEditorTool(string sprite)
+        {
+            _sprite = sprite;
+        }
+
+        public override void OnDrop(IntVector2 vector)
+        {
+            Singleton<PlusLevelEditor>.Instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Elv_Buzz"));
+        }
+
+        public override void OnHover(IntVector2 vector)
+        {
+            
+        }
+    }
+
     public class PrebuiltStructureTool : PlaceAndRotateToolBase
     {
         string _sprite;

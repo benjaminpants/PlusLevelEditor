@@ -163,6 +163,7 @@ namespace PlusLevelLoader
                     position = poster.position.ToInt()
                 });
             }
+            /*
             for (int i = 0; i < level.buttons.Count; i++)
             {
                 ButtonData buttonData = new ButtonData()
@@ -182,7 +183,7 @@ namespace PlusLevelLoader
                     });
                 }
                 asset.buttons.Add(buttonData);
-            }
+            }*/
 
             asset.spawnDirection = Direction.North;
             asset.spawnPoint = new Vector3(0f, 5f, 0f);

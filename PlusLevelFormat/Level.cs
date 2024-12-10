@@ -96,6 +96,12 @@ namespace PlusLevelFormat
             {
                 writer.Write(level.tiledPrefabs[i]);
             }
+            // write structures
+            writer.Write(level.structures.Count);
+            for (int i = 0; i < level.structures.Count; i++)
+            {
+                writer.Write(level.structures[i]);
+            }
             // write posters
             writer.Write(level.posters.Count);
             for (int i = 0; i < level.posters.Count; i++)
@@ -157,7 +163,7 @@ namespace PlusLevelFormat
             int buttonCount = reader.ReadInt32();
             for (int i = 0; i < buttonCount; i++)
             {
-                newLevel.buttons.Add(reader.ReadButton());
+                newLevel.buttons.Add(reader.ReadButton(version));
             }
             if (version <= 1) return newLevel;
             bool[] entitySafe = reader.ReadBoolArray();
@@ -191,6 +197,14 @@ namespace PlusLevelFormat
             {
                 newLevel.tiledPrefabs.Add(reader.ReadTiledPrefab());
             }
+            if (version >= 8)
+            {
+                int structureCount = reader.ReadInt32();
+                for (int i = 0; i < structureCount; i++)
+                {
+                    newLevel.structures.Add(reader.ReadStructure());
+                }
+            }
             if (version <= 4) return newLevel;
             int posterCount = reader.ReadInt32();
             for (int i = 0; i < posterCount; i++)
@@ -214,7 +228,7 @@ namespace PlusLevelFormat
 
     public class Level
     {
-        public const byte version = 7;
+        public const byte version = 8;
         public Tile[,] tiles = new Tile[1,1];
         public bool[,] entitySafeTiles = new bool[1, 1];
         public bool[,] eventSafeTiles = new bool[1, 1];
@@ -230,6 +244,7 @@ namespace PlusLevelFormat
         public List<ButtonLocation> buttons = new List<ButtonLocation>();
         public List<PosterLocation> posters = new List<PosterLocation>();
         public List<LightLocation> lights = new List<LightLocation>();
+        public List<StructureLocation> structures = new List<StructureLocation>();
 
         public BaldiLightMode lightMode = BaldiLightMode.Cumulative;
         public UnityColor minLightColor = new UnityColor(1f,1f,1f);

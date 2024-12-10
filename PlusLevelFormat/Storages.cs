@@ -109,6 +109,12 @@ namespace PlusLevelFormat
         public PlusDirection direction = PlusDirection.Null;
     }
 
+    public class StructureLocation : TiledPrefab
+    {
+        public int data;
+        public string prefab;
+    }
+
     public class PosterLocation : TiledPrefab
     {
 

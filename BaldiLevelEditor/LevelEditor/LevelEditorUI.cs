@@ -313,12 +313,12 @@ namespace BaldiLevelEditor
             new ItemTool("points50"),
             new ItemTool("points100")),
             new ToolCategory("connectables", GetUISprite("Button_button"),
-            new ButtonTool("button"),
-            new TileBasedTool("lockdowndoor")),
+            new DisabledEditorTool("Button_button"),
+            new DisabledEditorTool("Tile_lockdowndoor")),
             new ToolCategory("utilities", GetUISprite("Gear"),
             new ElevatorTool(true),
             new ElevatorTool(false),
-            new ConnectTool(),
+            new DisabledEditorTool("Connect"),
             new MergeTool(),
             new DeleteTool()),
         };
@@ -570,9 +570,18 @@ namespace BaldiLevelEditor
             slot.transform.SetParent(slot.transform, false);
             icon.name = "Icon";
             StandardMenuButton button = icon.gameObject.ConvertToButton<StandardMenuButton>(true);
+            if (tool is DisabledEditorTool)
+            {
+                icon.color = new Color(0.5f,0.5f,0.5f);
+            }
             button.OnPress.AddListener(() =>
             {
                 if (button.GetComponent<EditorTrackCursor>()) return;
+                if (tool is DisabledEditorTool)
+                {
+                    Singleton<PlusLevelEditor>.Instance.audMan.PlaySingle(BaldiLevelEditorPlugin.Instance.assetMan.Get<SoundObject>("Elv_Buzz"));
+                    return;
+                }
                 if (selectedTool == null)
                 {
                     SelectTool(tool);
