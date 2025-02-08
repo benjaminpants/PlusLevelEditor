@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using MTM101BaldAPI;
+using MTM101BaldAPI.AssetTools;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,8 +26,9 @@ namespace BaldiLevelEditor
         public GameObject main;
         public GameObject[] arrows = new GameObject[4];
         public GameObject[] prefabArrows = new GameObject[6];
-        public GameObject[] prefabRotations = new GameObject[1];
+        public GameObject[] prefabRotations = new GameObject[3];
         private SelectorType _type = SelectorType.Tile;
+		public int rotationIndex = 0;
 
         public static Vector3[] rotationVectors = new Vector3[]
         {
@@ -50,8 +52,9 @@ namespace BaldiLevelEditor
                 }*/
                 _type = value;
                 main.SetActive(true);
-                prefabRotations[0].SetActive(false);
-                for (int i = 0; i < arrows.Length; i++)
+				for (int i = 0; i < prefabRotations.Length; i++)
+					prefabRotations[i].SetActive(false);
+				for (int i = 0; i < arrows.Length; i++)
                 {
                     arrows[i].SetActive(true);
                 }
@@ -71,7 +74,8 @@ namespace BaldiLevelEditor
                         {
                             prefabArrows[i].SetActive(false);
                         }
-                        prefabRotations[0].SetActive(true);
+						for (int i = 0; i < prefabRotations.Length; i++)
+							prefabRotations[i].SetActive(true);
                         break;
                     case SelectorType.ItemSelectDirection:
                         List<Direction> directions = Directions.All();
@@ -87,7 +91,7 @@ namespace BaldiLevelEditor
                         {
                             arrows[i].SetActive(false);
                         }
-                        break;
+						break;
                     case SelectorType.PrefabSelect:
                         main.SetActive(false);
                         for (int i = 0; i < arrows.Length; i++)
@@ -98,23 +102,24 @@ namespace BaldiLevelEditor
                         {
                             prefabArrows[i].SetActive(true);
                         }
-                        prefabRotations[0].SetActive(true);
-                        //prefabRotations[0].transform.localPosition = Vector3.forward * 9f;
-                        break;
+						for (int i = 0; i < prefabRotations.Length; i++)
+							prefabRotations[i].SetActive(true);
+						//prefabRotations[0].transform.localPosition = Vector3.forward * 9f;
+						break;
                     case SelectorType.None:
                         main.SetActive(false);
                         for (int i = 0; i < arrows.Length; i++)
                         {
                             arrows[i].SetActive(false);
                         }
-                        break;
+						break;
                     case SelectorType.HoldingItem:
                         main.SetActive(true);
                         for (int i = 0; i < arrows.Length; i++)
                         {
                             arrows[i].SetActive(false);
                         }
-                        break;
+						break;
                 }
             } 
         }
@@ -123,7 +128,9 @@ namespace BaldiLevelEditor
             Initialize();
         }
 
-        GameObject CreateGraphic(Texture2D texture, string name)
+		GameObject CreateGraphic(Texture2D texture, string name) =>
+			CreateGraphic(texture, name, Texture2D.whiteTexture);
+		GameObject CreateGraphic(Texture2D texture, string name, Texture2D colorTex)
         {
             GameObject obj = new GameObject();
             obj.name = name;
@@ -131,7 +138,7 @@ namespace BaldiLevelEditor
             filter.mesh = BaldiLevelEditorPlugin.Instance.assetMan.Get<Mesh>("Quad");
             MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
             renderer.material = new Material(BaldiLevelEditorPlugin.tileAlphaShader);
-            renderer.material.SetTexture("_LightMap", Texture2D.whiteTexture);
+            renderer.material.SetTexture("_LightMap", colorTex);
             renderer.material.SetMainTexture(texture);
             obj.transform.SetParent(transform, false);
             obj.transform.localPosition = Vector3.up * 0.25f;
@@ -195,13 +202,37 @@ namespace BaldiLevelEditor
                 bc.size = new Vector3(2.5f,6f,2.5f);
             }
             prefabArrows[1].transform.Rotate(Vector3.forward, 180f);
-            prefabRotations[0] = new GameObject();
-            prefabRotations[0].transform.SetParent(transform,false);
-            GameObject circle = CreateGraphic(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("Circle"), "Circle");
-            circle.transform.SetParent(prefabRotations[0].transform);
-            circle.AddComponent<MeshCollider>();
-            prefabRotations[0].transform.localScale *= 0.1f;
-            type = SelectorType.None;
+
+			Texture2D x = new Texture2D(1, 1);
+			x.SetPixel(0, 0, Color.red);
+			x.Apply();
+
+			Texture2D y = new Texture2D(1, 1);
+			y.SetPixel(0, 0, Color.green);
+			y.Apply();
+
+			Texture2D z = new Texture2D(1, 1);
+			z.SetPixel(0, 0, Color.blue);
+			z.Apply();
+
+			Texture2D[] texAr = new Texture2D[3]
+			{
+				x, y, z
+			};
+
+			// Rotation circle setup
+			for (int i = 0; i < prefabRotations.Length; i++)
+			{
+				prefabRotations[i] = new GameObject();
+				prefabRotations[i].transform.SetParent(transform, false);
+				GameObject circle = CreateGraphic(BaldiLevelEditorPlugin.Instance.assetMan.Get<Texture2D>("Circle"), "Circle_" + i, texAr[i]);
+				circle.transform.SetParent(prefabRotations[i].transform);
+				circle.AddComponent<MeshCollider>();
+				circle.AddComponent<BillboardUpdater>(); // Make it easier to see these circles
+				prefabRotations[i].transform.localScale *= 0.1f;
+			}
+
+			type = SelectorType.None;
         }
     }
 }
