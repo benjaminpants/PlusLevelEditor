@@ -33,7 +33,7 @@ namespace BaldiLevelEditor
         }
     }
 
-    [BepInPlugin("mtm101.rulerp.baldiplus.leveleditor", "Baldi's Basics Plus Level Editor", "0.1.0.2")]
+    [BepInPlugin("mtm101.rulerp.baldiplus.leveleditor", "Baldi's Basics Plus Level Editor", "0.1.0.3")]
     public class BaldiLevelEditorPlugin : BaseUnityPlugin
     {
 
