@@ -265,6 +265,7 @@ namespace BaldiLevelEditor
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("decor_zoneflag", objects.Where(x => x.name == "Decor_ZoningFlag").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First(), Vector3.zero));
             editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("picnicbasket", objects.Where(x => x.name == "PicnicBasket").Where(x => x.transform.parent == null).First(), Vector3.zero));
+            editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("pedestal", objects.Where(x => x.name == "Decor_Pedestal").Where(x => x.transform.parent == null).First(), Vector3.zero));
             //editorObjects.Add(EditorObjectType.CreateFromGameObject<EditorPrefab, PrefabLocation>("hopscotch", );
 
             //objects.Where(x => x.name == "PlaygroundPavement").Where(x => x.transform.parent == null).First().transform.GetChild(0);

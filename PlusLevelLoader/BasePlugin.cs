@@ -22,6 +22,7 @@ namespace PlusLevelLoader
     {
         public static PlusLevelLoaderPlugin Instance;
         public static Level level;
+        public static RoomAsset elevatorAsset;
 
         public static Texture2D TextureFromAlias(string alias)
         {
@@ -170,6 +171,7 @@ namespace PlusLevelLoader
             prefabAliases.Add("tent", objects.Where(x => x.name == "Tent_Object").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("rock", objects.Where(x => x.name == "Rock").Where(x => x.transform.parent == null).First());
             prefabAliases.Add("picnicbasket", objects.Where(x => x.name == "PicnicBasket").Where(x => x.transform.parent == null).First());
+            prefabAliases.Add("pedestal", objects.Where(x => x.name == "Decor_Pedestal").Where(x => x.transform.parent == null).First());
 
             TileBasedObject[] tiledObjects = Resources.FindObjectsOfTypeAll<TileBasedObject>();
 
@@ -225,7 +227,10 @@ namespace PlusLevelLoader
                 }
             });
             buttons.Add("button", assetMan.Get<GameButtonBase>("GameButton"));
+            // this is literally the worst solution ever. why
+            assetMan.AddFromResources<RoomAsset>();
             elevators.Add("elevator", PlusLevelLoaderPlugin.Instance.assetMan.Get<Elevator>("ElevatorPrefab"));
+            elevatorAsset = assetMan.Get<RoomAsset>("Room_Elevator");
             lightAliases.Add("fluorescent", objects.First(x => (x.name == "FluorescentLight" && (x.transform.parent == null))).transform);
             lightAliases.Add("none", null);
             yield break;

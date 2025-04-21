@@ -257,6 +257,8 @@ namespace BaldiLevelEditor
             new RotateAndPlacePrefab("bookshelf"),
             new RotateAndPlacePrefab("bookshelf_hole"),
             new ObjectTool("rounddesk"),
+            // peak lazyness
+            //new ObjectTool("pedestal"),
             new ObjectTool("counter"),
             new ObjectTool("examination"),
             new ObjectTool("merrygoround"),
@@ -312,9 +314,9 @@ namespace BaldiLevelEditor
             new ItemTool("points25"),
             new ItemTool("points50"),
             new ItemTool("points100")),
-            new ToolCategory("connectables", GetUISprite("Button_button"),
+            /*new ToolCategory("connectables", GetUISprite("Button_button"),
             new DisabledEditorTool("Button_button"),
-            new DisabledEditorTool("Tile_lockdowndoor")),
+            new DisabledEditorTool("Tile_lockdowndoor")),*/
             new ToolCategory("utilities", GetUISprite("Gear"),
             new ElevatorTool(true),
             new ElevatorTool(false),

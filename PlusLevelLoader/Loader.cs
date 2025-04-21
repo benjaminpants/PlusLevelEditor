@@ -194,7 +194,7 @@ namespace PlusLevelLoader
                     direction = level.exits[i].direction.ToStandard(),
                     position = level.exits[i].position.ToInt(),
                     spawn = level.exits[i].isSpawn,
-                    room = RoomAssetMetaStorage.Instance.Get("Room_Elevator").value,
+                    room = PlusLevelLoaderPlugin.elevatorAsset,
                     prefab = PlusLevelLoaderPlugin.Instance.elevators[level.exits[i].type]
                 });
             }
