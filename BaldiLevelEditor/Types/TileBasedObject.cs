@@ -291,7 +291,8 @@ namespace BaldiLevelEditor
             clone.name = "ButtonOverlay";
             //clone.transform.position += (clone.transform.forward *= 0.025f);
             hackRenderer = clone;
-            hackRenderer.materials = new Material[] { ButtonColorManager.buttonColors["Red"].buttonUnpressed };
+            Debug.LogError("Reimplement button materials you goof!");
+            //hackRenderer.materials = new Material[] { ButtonColorManager.buttonColors["Red"].buttonUnpressed };
             Destroy(clone.GetComponent<MeshCollider>());
         }
 
