@@ -17,7 +17,7 @@ using UnityEngine;
 namespace PlusLevelLoader
 {
 
-    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.1.0.3")]
+    [BepInPlugin("mtm101.rulerp.baldiplus.levelloader", "Baldi's Basics Plus Level Loader", "0.1.0.4")]
     public class PlusLevelLoaderPlugin : BaseUnityPlugin
     {
         public static PlusLevelLoaderPlugin Instance;
@@ -219,6 +219,8 @@ namespace PlusLevelLoader
             itemObjects.Add("points50", ItemMetaStorage.Instance.GetPointsObject(50, true));
             itemObjects.Add("points100", ItemMetaStorage.Instance.GetPointsObject(100, true));
             itemObjects.Add("buspass", ItemMetaStorage.Instance.FindByEnum(Items.BusPass).value);
+            itemObjects.Add("inviselixer", ItemMetaStorage.Instance.FindByEnum(Items.InvisibilityElixir).value);
+            itemObjects.Add("reachextend", ItemMetaStorage.Instance.FindByEnum(Items.ReachExtender).value);
             Resources.FindObjectsOfTypeAll<PosterObject>().Do(x =>
             {
                 if (x.GetInstanceID() >= 0)

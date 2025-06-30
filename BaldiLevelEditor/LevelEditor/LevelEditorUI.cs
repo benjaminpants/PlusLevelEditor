@@ -306,6 +306,8 @@ namespace BaldiLevelEditor
             new ItemTool("whistle"),
             new ItemTool("dirtychalk"),
             new ItemTool("nametag"),
+            new ItemTool("inviselixer"),
+            new ItemTool("reachextend"),
             new ItemTool("teleporter"),
             new ItemTool("portalposter"),
             new ItemTool("grapple"),
