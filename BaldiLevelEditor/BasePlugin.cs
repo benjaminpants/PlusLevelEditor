@@ -113,8 +113,8 @@ namespace BaldiLevelEditor
 
         public IEnumerator GoToGame()
         {
-            AsyncOperation waitForSceneLoad = SceneManager.LoadSceneAsync("Game");
-            while (!waitForSceneLoad.isDone)
+            Singleton<AdditiveSceneManager>.Instance.LoadScene("Game");
+            while (Singleton<AdditiveSceneManager>.Instance.Busy)
             {
                 yield return null;
             }
@@ -445,7 +445,7 @@ namespace BaldiLevelEditor
             assetMan.Get<SoundObject>("Audio/IncompatibleResolution").subtitle = true;
             assetMan.Get<SoundObject>("Audio/IncompatibleResolution").soundKey = "Please change your resolution in the options menu!";
             assetMan.Get<Sprite>("UI/DitherPattern").texture.wrapMode = TextureWrapMode.Repeat;
-            LoadingEvents.RegisterOnAssetsLoaded(Info, AssetsLoadedActual(), false);
+            LoadingEvents.RegisterOnAssetsLoaded(Info, AssetsLoadedActual(), LoadingEventOrder.Pre);
             harmony.PatchAllConditionals();
         }
     }

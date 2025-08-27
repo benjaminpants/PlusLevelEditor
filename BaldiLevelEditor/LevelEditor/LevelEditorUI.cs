@@ -322,7 +322,6 @@ namespace BaldiLevelEditor
             new ToolCategory("utilities", GetUISprite("Gear"),
             new ElevatorTool(true),
             new ElevatorTool(false),
-            new DisabledEditorTool("Connect"),
             new MergeTool(),
             new DeleteTool()),
         };
@@ -342,16 +341,6 @@ namespace BaldiLevelEditor
             {
                 Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "CustomLevels"));
             }
-        }
-
-        IEnumerator WaitForAudMan()
-        {
-            yield return null;
-            while (audMan.AnyAudioIsPlaying)
-            {
-                yield return null;
-            }
-            SceneManager.LoadScene("MainMenu");
         }
 
         float originalScale = 1f;

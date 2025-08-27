@@ -240,7 +240,7 @@ namespace PlusLevelLoader
 
         void Awake()
         {
-            LoadingEvents.RegisterOnAssetsLoaded(Info, OnAssetsLoaded(), false);
+            LoadingEvents.RegisterOnAssetsLoaded(Info, OnAssetsLoaded(), LoadingEventOrder.Pre);
             Instance = this;
             Harmony harmony = new Harmony("mtm101.rulerp.baldiplus.levelloader");
 
